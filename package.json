@@ -1,0 +1,22 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "description": "test pup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ozkostay/Puppeteer.git"
+  },
+  "author": "Ozhug",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ozkostay/Puppeteer/issues"
+  },
+  "homepage": "https://github.com/ozkostay/Puppeteer#readme",
+  "dependencies": {
+    "puppeteer": "^22.10.0"
+  }
+}
