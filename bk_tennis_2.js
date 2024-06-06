@@ -28,20 +28,26 @@ const app = async () => {
       const lineRows = [];
 
       // find line_rows
-      const rows = Array.from(
-        el.querySelectorAll("table.member-area-content-table")
-      );
+      const rows = Array.from(el.querySelectorAll("table.coupon-row-item"));
       const rowsInTurnament = rows.length;
 
       rows.forEach((row, rowIndex) => {
         // find players in row
-        const spans = Array.from(
+        const nameSpans = Array.from(
           row.querySelectorAll("span[data-member-link]")
         );
         const players = [];
-        spans.forEach((i) => players.push(i.innerText));
+        nameSpans.forEach((i) => players.push(i.innerText));
 
-        lineRows.push({ rowIndex, players });
+        // find data-market-type
+        const kefsAll = Array.from(row.querySelectorAll("[data-market-type]"));
+        const kefsAllTemp = [];
+        //kefsAllTemp.push(kefsAll.length);
+        kefsAll.forEach((i) => kefsAllTemp.push(`${i.innerText}`));
+
+        if (players.length > 0) {
+          lineRows.push({ rowIndex, players, kefsAllTemp });
+        }
       });
 
       // Add data in turnament
