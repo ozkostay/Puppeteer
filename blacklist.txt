@@ -1,0 +1,28 @@
+div-class="category-container"
+  
+  <table class="category-header">
+    <a class="category-label-link"
+      === Turnament
+
+  <div class="category-content"
+    <div class="bg"
+
+
+spans: spansText.join(" "),
+
+===================================================================
+
+
+{
+  "turnamentId":"container_3195294",
+  "lineRows":[
+    {
+      "rowIndex":0,
+      "players":["Алькарас Гарфия, Карлос","Синнер, Янник"]
+    },
+    {
+      "rowIndex":1,
+      "players":["Рууд, Каспер","Зверев, Александр"]
+    }
+  ],
+  "rrr":2}
