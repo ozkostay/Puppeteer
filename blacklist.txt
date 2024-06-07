@@ -7,18 +7,21 @@ div-class="category-container"
   <div class="category-content"
     <div class="bg"
 
-
+'—_-',
 spans: spansText.join(" "),
 
 ===================================================================
-
-"kefsAllTemp":[
+Fielsd in table PG
+Tennis======
   
-  "1.61",
-  "2.375",
-  "(-2.5)\n1.86",
-  "(+2.5)\n1.94",
-  "(38.5)\n1.92",
-  "(38.5)\n1.89"
-  
-  ]
+  name1
+  name2
+  win1_odds
+  win1_odds
+  handicap1_value
+  handicap1_odds
+  handicap2_value
+  handicap2_odds
+  total_value
+  total1_odds
+  total2_odds

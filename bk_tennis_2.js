@@ -1,13 +1,18 @@
 import puppeteer from "puppeteer";
 
+const bd = [];
 //==========
 const app = async () => {
   const browser = await puppeteer.launch({
     headless: false,
   });
 
+  const url = "https://www.marathonbet.ru/su/live/popular?ecids=11500730,3219999,6899838,3241271,13765822,6899932,6843737,11945367,7236917,4357735,15801188,15742892,18877691,16059890,7194839,7198288,6765552";
+  // const url = "https://www.marathonbet.ru/su/betting/Tennis+-+2398";
+
   const page = await browser.newPage();
-  await page.goto("https://www.marathonbet.ru/su/betting/Tennis+-+2398", {
+  await page.goto(url, {
+    
     waitUntil: "domcontentloaded",
   });
 
@@ -25,7 +30,21 @@ const app = async () => {
     const retData = [];
     els.forEach((el) => {
       const turnamentId = el.id;
-      
+
+      // ==== Make name of tunament
+      const turnamentNameTemp = el.querySelectorAll("h2.category-label");
+      const turnamentNameArr = [];
+      turnamentNameTemp.forEach((item) => {
+        const spans = item.querySelectorAll("span");
+        spans.forEach((span) => {
+          const spanText = span.innerText.trim();
+          if (!spanText.toLowerCase().includes("финал")) {
+            turnamentNameArr.push(spanText);
+          }
+        });
+      });
+      const turnamentName = turnamentNameArr.join(" ");
+
       // ========== Labels
       const labels = [];
       const labelTableSource = Array.from(
@@ -33,47 +52,36 @@ const app = async () => {
       );
 
       labelTableSource.forEach((i) => {
-        console.log('333', i);
+        console.log("333", i);
         const ths = i.querySelectorAll("th");
         ths.forEach((th) => {
           // console.log('======= 444' , th.textContent.trim().slice(' ')[0]);
-          console.log('======= 444=' + th.textContent.trim().split(' ')[0] + '=');
-          labels.push(th.textContent.trim().split(' ')[0].replace(/\n/g, ''));
-        })
+          console.log(
+            "======= 444=" + th.textContent.trim().split(" ")[0] + "="
+          );
+          labels.push(th.textContent.trim().split(" ")[0].replace(/\n/g, ""));
+        });
+      });
 
-      })
-      // let LabelThs = [];
-      // console.log('234', labelTableSource[0],'654');
-      // const labelSellsSource = labelTableSource[0].querySelectorAll("th")
-      // console.log('777', labelSellsSource.length,'888');
-      //LabelThs = labelTableSource[0].querySelectorAll("th");
-      // LabelThs.forEach((i, idx) => {
-      //   console.log('123', idx, '===', i);
-      // })
-      
-      // labels.push(labelThs.length);
-      
       // find line_rows
       const lineRows = [];
       const rows = Array.from(el.querySelectorAll("table.coupon-row-item"));
       const rowsInTurnament = rows.length;
 
       rows.forEach((row, rowIndex) => {
-        
-        
-        // labelSource.forEach((i) => labels.push(i.innerText));
-        
         // =================== find players in row
         const nameSpans = Array.from(
           row.querySelectorAll("span[data-member-link]")
         );
         const players = [];
-        nameSpans.forEach((i) => players.push(i.innerText));
+        nameSpans.forEach((i) => players.push(i.innerText.trim()));
 
         // ===================  find data-market-type
         const kefsAll = Array.from(row.querySelectorAll("[data-market-type]"));
         const kefsAllTemp = [];
-        kefsAll.forEach((i) => kefsAllTemp.push(`${i.innerText}`));
+        kefsAll.forEach((i) =>
+          kefsAllTemp.push(`${i.innerText.trim().replace(/\n/g, "=&=")}`)
+        );
 
         if (players.length > 0) {
           lineRows.push({ rowIndex, labels, players, kefsAllTemp });
@@ -81,15 +89,77 @@ const app = async () => {
       });
 
       // Add data in turnament
-      retData.push({ turnamentId, lineRows, rowsInTurnament });
+      retData.push({ turnamentId, turnamentName, lineRows, rowsInTurnament });
     });
     return retData;
   });
 
-  console.log("retrun", data[0]);
-  console.log("retrun", JSON.stringify(data[0]));
-  console.log("retrun LENGTH", data.length);
-  // await browser.close();
+  // Itogs
+  // console.log("retrun", data[6]);
+  // console.log("retrun", JSON.stringify(data[0]));
+  // console.log("retrun LENGTH", data.length);
+
+  // console.log("shapka", data[0].lineRows[0].labels);
+  // console.log("kefs", data[0].lineRows[0].kefsAllTemp);
+
+  data.forEach((turnament) => {
+    turnament.lineRows.forEach((lineRow) => {
+      const tempSoursObj = lineRow;
+      const prepObj = {
+        turnament: turnament.turnamentName,
+        name1: null,
+        name2: null,
+        win1_odds: null,
+        win2_odds: null,
+        handicap1_value: null,
+        handicap1_odds: null,
+        handicap2_value: null,
+        handicap2_odds: null,
+        total_value: null,
+        total1_odds: null,
+        total2_odds: null,
+      };
+
+      prepObj.name1 = tempSoursObj.players[0];
+      prepObj.name2 = tempSoursObj.players[1];
+      if (tempSoursObj.kefsAllTemp[0] !== "—") {
+        prepObj.win1_odds = Number(tempSoursObj.kefsAllTemp[0]);
+        prepObj.win2_odds = Number(tempSoursObj.kefsAllTemp[1]);
+      }
+      if (tempSoursObj.kefsAllTemp[2].split("=&=")[0] !== "—") {
+        prepObj.handicap1_value = Number(
+          tempSoursObj.kefsAllTemp[2].split("=&=")[0].replace(/\(|\)/g, "")
+        );
+        prepObj.handicap1_odds = Number(
+          tempSoursObj.kefsAllTemp[2].split("=&=")[1]
+        );
+        prepObj.handicap2_value = Number(
+          tempSoursObj.kefsAllTemp[3].split("=&=")[0].replace(/\(|\)/g, "")
+        );
+        prepObj.handicap2_odds = Number(
+          tempSoursObj.kefsAllTemp[3].split("=&=")[1]
+        );
+      }
+      if (tempSoursObj.kefsAllTemp[4].split("=&=")[0] !== "—") {
+        prepObj.total_value = Number(
+          tempSoursObj.kefsAllTemp[4].split("=&=")[0].replace(/\(|\)/g, "")
+        );
+        prepObj.total1_odds = Number(
+          tempSoursObj.kefsAllTemp[4].split("=&=")[1]
+        );
+        prepObj.total2_odds = Number(
+          tempSoursObj.kefsAllTemp[5].split("=&=")[1]
+        );
+      }
+      bd.push(prepObj);
+    });
+  });
+  //=================== object preparation
+
+  console.log("============================");
+  console.log(bd);
+
+  await browser.close();
 
   console.log(999);
 }; //end =======
