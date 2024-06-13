@@ -7,8 +7,8 @@ const app = async () => {
     headless: false,
   });
 
-  const url = "https://www.marathonbet.ru/su/live/popular?ecids=11500730,3219999,6899838,3241271,13765822,6899932,6843737,11945367,7236917,4357735,15801188,15742892,18877691,16059890,7194839,7198288,6765552";
-  // const url = "https://www.marathonbet.ru/su/betting/Tennis+-+2398";
+  // const url = "https://www.marathonbet.ru/su/live/popular?ecids=11500730,3219999,6899838,3241271,13765822,6899932,6843737,11945367,7236917,4357735,15801188,15742892,18877691,16059890,7194839,7198288,6765552";
+  const url = "https://www.marathonbet.ru/su/betting/Tennis+-+2398";
 
   const page = await browser.newPage();
   await page.goto(url, {
