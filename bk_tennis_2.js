@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import fetch from 'node-fetch';
 
 const bd = [];
 //==========
@@ -44,7 +45,12 @@ const app = async () => {
         });
       });
       const turnamentName = turnamentNameArr.join(" ");
-
+      
+      if (turnamentName.includes("Итоги") || turnamentName.includes("Парный разряд")) {
+        return;
+      }
+      console.log('=!===== ', turnamentName );
+      
       // ========== Labels
       const labels = [];
       const labelTableSource = Array.from(
@@ -52,13 +58,13 @@ const app = async () => {
       );
 
       labelTableSource.forEach((i) => {
-        console.log("333", i);
+        // console.log("333", i);
         const ths = i.querySelectorAll("th");
         ths.forEach((th) => {
           // console.log('======= 444' , th.textContent.trim().slice(' ')[0]);
-          console.log(
-            "======= 444=" + th.textContent.trim().split(" ")[0] + "="
-          );
+          // console.log(
+          //   "======= 444=" + th.textContent.trim().split(" ")[0] + "="
+          // );
           labels.push(th.textContent.trim().split(" ")[0].replace(/\n/g, ""));
         });
       });
@@ -89,6 +95,7 @@ const app = async () => {
       });
 
       // Add data in turnament
+      
       retData.push({ turnamentId, turnamentName, lineRows, rowsInTurnament });
     });
     return retData;
@@ -156,10 +163,34 @@ const app = async () => {
   });
   //=================== object preparation
 
-  console.log("============================");
-  console.log(bd);
-
+  // console.log("============================");
   await browser.close();
+  // console.log(JSON.stringify(bd)); //работает
+
+  // Отправляем на backend
+  const sendOnBackend = async (lines) => {
+    console.log(JSON.stringify(lines));
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      // headers: {
+      //   Authorization: "Bearer " + localStorage.getItem("token"),
+      // },
+      body: JSON.stringify(lines),
+    };
+    try {
+      // const res = await fetch("http://localhost:3000/tennis");
+      const res = await fetch("http://localhost:3000/tennis", options);
+      // // console.log("RES", res.text());
+      console.log('res', await res.json());
+      // alert("Линии успешно добавлены!");
+    } catch (e) {
+      console.log("ERROR UPLOAD", e);
+    }
+  }
+  sendOnBackend(bd)
 
   console.log(999);
 }; //end =======
