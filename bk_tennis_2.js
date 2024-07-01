@@ -39,7 +39,8 @@ const app = async () => {
         const spans = item.querySelectorAll("span");
         spans.forEach((span) => {
           const spanText = span.innerText.trim();
-          if (!spanText.toLowerCase().includes("финал")) {
+          if (spanText.toLowerCase().includes("финал") || spanText.toLowerCase().includes("раунд")) {
+          } else {
             turnamentNameArr.push(spanText);
           }
         });
@@ -169,6 +170,7 @@ const app = async () => {
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
+    console.log('Длина массива', lines.length);
     console.log(JSON.stringify(lines));
     const options = {
       method: "POST",
@@ -190,6 +192,7 @@ const app = async () => {
       console.log("ERROR UPLOAD", e);
     }
   }
+  
   sendOnBackend(bd)
 
   console.log(999);
