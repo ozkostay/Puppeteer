@@ -46,11 +46,27 @@ const app = async () => {
         });
       });
       const turnamentName = turnamentNameArr.join(" ");
+
+      // surface
+      let surface = null;
+      const surfaceContainer = el.querySelectorAll("div.tennis-court-surface-container");
+
+
+      surfaceContainer.forEach((item) => {
+        const spans = item.querySelectorAll("span.btn__label");
+        // spans.forEach((itemSpan) => {
+        //   console.log('SURFACE', item.innerText.trim());
+        // })
+        if (spans.length > 0) {
+          // console.log('SURFACE', spans[0].innerText.trim());
+          surface = spans[0].innerText.trim();
+        }
+      })
       
       if (turnamentName.includes("Итоги") || turnamentName.includes("Парный разряд")) {
         return;
       }
-      console.log('=!===== ', turnamentName );
+      console.log('=!===== ', turnamentName, surface );
       
       // ========== Labels
       const labels = [];
@@ -97,24 +113,18 @@ const app = async () => {
 
       // Add data in turnament
       
-      retData.push({ turnamentId, turnamentName, lineRows, rowsInTurnament });
+      retData.push({ turnamentId, turnamentName, surface, lineRows, rowsInTurnament });
     });
     return retData;
   });
 
-  // Itogs
-  // console.log("retrun", data[6]);
-  // console.log("retrun", JSON.stringify(data[0]));
-  // console.log("retrun LENGTH", data.length);
-
-  // console.log("shapka", data[0].lineRows[0].labels);
-  // console.log("kefs", data[0].lineRows[0].kefsAllTemp);
-
+  //=================== object preparation
   data.forEach((turnament) => {
     turnament.lineRows.forEach((lineRow) => {
       const tempSoursObj = lineRow;
       const prepObj = {
         turnament: turnament.turnamentName,
+        surface: turnament.surface,
         name1: null,
         name2: null,
         win1_odds: null,
@@ -162,33 +172,27 @@ const app = async () => {
       bd.push(prepObj);
     });
   });
-  //=================== object preparation
+  
 
-  // console.log("============================");
-  await browser.close();
-  // console.log(JSON.stringify(bd)); //работает
+  await browser.close(); //========================================================== = = = =
+  
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
     console.log('Длина массива', lines.length);
-    console.log(JSON.stringify(lines));
     const options = {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        // Authorization: "Bearer " + localStorage.getItem("token"),
       },
-      // headers: {
-      //   Authorization: "Bearer " + localStorage.getItem("token"),
-      // },
       body: JSON.stringify(lines),
     };
     try {
-      // const res = await fetch("http://localhost:3000/tennis");
-      const res = await fetch("http://localhost:3000/tennis", options);
-      // // console.log("RES", res.text());
+      const res = await fetch("http://localhost:3000/tennis/pars", options);
       console.log('res', await res.json());
-      // alert("Линии успешно добавлены!");
-    } catch (e) {
+    }
+    catch (e) {
       console.log("ERROR UPLOAD", e);
     }
   }
