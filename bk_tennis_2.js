@@ -173,31 +173,31 @@ const app = async () => {
     });
   });
   
-
+  console.log(bd);
   await browser.close(); //========================================================== = = = =
   
 
   // Отправляем на backend
-  const sendOnBackend = async (lines) => {
-    console.log('Длина массива', lines.length);
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-      body: JSON.stringify(lines),
-    };
-    try {
-      const res = await fetch("http://localhost:3000/tennis/pars", options);
-      console.log('res', await res.json());
-    }
-    catch (e) {
-      console.log("ERROR UPLOAD", e);
-    }
-  }
+  // const sendOnBackend = async (lines) => {
+  //   console.log('Длина массива', lines.length);
+  //   const options = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       // Authorization: "Bearer " + localStorage.getItem("token"),
+  //     },
+  //     body: JSON.stringify(lines),
+  //   };
+  //   try {
+  //     const res = await fetch("http://localhost:3000/tennis/pars", options);
+  //     console.log('res', await res.json());
+  //   }
+  //   catch (e) {
+  //     console.log("ERROR UPLOAD", e);
+  //   }
+  // }
   
-  sendOnBackend(bd)
+  // sendOnBackend(bd)
 
   console.log(999);
 }; //end =======
