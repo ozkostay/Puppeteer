@@ -1,5 +1,5 @@
 import puppeteer from "puppeteer";
-import fetch from 'node-fetch';
+import fetch from "node-fetch";
 
 const bd = [];
 //==========
@@ -13,7 +13,6 @@ const app = async () => {
 
   const page = await browser.newPage();
   await page.goto(url, {
-    
     waitUntil: "domcontentloaded",
   });
 
@@ -39,7 +38,11 @@ const app = async () => {
         const spans = item.querySelectorAll("span");
         spans.forEach((span) => {
           const spanText = span.innerText.trim();
-          if (spanText.toLowerCase().includes("финал") || spanText.toLowerCase().includes("раунд")) {
+          if (
+            spanText.toLowerCase().includes("финал") ||
+            spanText.toLowerCase().includes("раунд") ||
+            spanText.toLowerCase().includes("квалификация")
+          ) {
           } else {
             turnamentNameArr.push(spanText);
           }
@@ -49,25 +52,28 @@ const app = async () => {
 
       // surface
       let surface = null;
-      const surfaceContainer = el.querySelectorAll("div.tennis-court-surface-container");
-
+      const surfaceContainer = el.querySelectorAll(
+        "div.tennis-court-surface-container"
+      );
 
       surfaceContainer.forEach((item) => {
         const spans = item.querySelectorAll("span.btn__label");
-        // spans.forEach((itemSpan) => {
-        //   console.log('SURFACE', item.innerText.trim());
-        // })
         if (spans.length > 0) {
-          // console.log('SURFACE', spans[0].innerText.trim());
           surface = spans[0].innerText.trim();
         }
-      })
+      });
+
+      //Исключаем по
+      const arrWords = ["Итоги", "Парный разряд"];
+      const check = arrWords.reduce((acc, cur) => {
+        const plus = turnamentName.includes(cur) ? 1 : 0;
+        return acc + plus;
+      }, 0);
+      if (check > 0) return;
       
-      if (turnamentName.includes("Итоги") || turnamentName.includes("Парный разряд")) {
-        return;
-      }
-      console.log('=!===== ', turnamentName, surface );
-      
+
+      console.log("=!===== ", turnamentName, surface);
+
       // ========== Labels
       const labels = [];
       const labelTableSource = Array.from(
@@ -112,8 +118,14 @@ const app = async () => {
       });
 
       // Add data in turnament
-      
-      retData.push({ turnamentId, turnamentName, surface, lineRows, rowsInTurnament });
+
+      retData.push({
+        turnamentId,
+        turnamentName,
+        surface,
+        lineRows,
+        rowsInTurnament,
+      });
     });
     return retData;
   });
@@ -172,14 +184,13 @@ const app = async () => {
       bd.push(prepObj);
     });
   });
-  
+
   // console.log(bd);
   await browser.close(); //========================================================== = = = =
-  
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
-    console.log('Длина массива', lines.length);
+    console.log("Длина массива", lines.length);
     const options = {
       method: "POST",
       headers: {
@@ -190,16 +201,16 @@ const app = async () => {
     };
     try {
       const res = await fetch("http://localhost:3000/tennis/pars", options);
-      console.log('res', await res.json());
-    }
-    catch (e) {
+      console.log("res", await res.json());
+    } catch (e) {
       console.log("ERROR UPLOAD", e);
     }
-  }
-  
-  sendOnBackend(bd)
+  };
 
-  console.log(999);
+  const startToBackend = new Date();
+  sendOnBackend(bd);
+  console.log("Время выполнения ", new Date() - startToBackend );
+  console.log(999 );
 }; //end =======
 
 app();
