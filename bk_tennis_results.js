@@ -26,50 +26,78 @@ const app = async () => {
   const data = await page.$$eval("label.v-label", (els) => {
     const labels = Array.from(els);
     labels.forEach((label) => {
-      console.log('===', label.innerText);
-      if(label.innerText.trim().toLowerCase() === 'теннис') {
+      console.log("===", label.innerText);
+      if (label.innerText.trim().toLowerCase() === "теннис") {
         label.click();
         return;
       }
-    })
-  })
-  console.log('=== 1.5');
+    });
+  });
+  console.log("=== 1.5");
 
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
-    console.log('=== BUTTON', els)
+    console.log("=== BUTTON", els);
     els[0].click();
-  })
+  });
   console.log(222);
-  
+
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
     const timeWhen = Array.from(els);
     timeWhen.forEach((div) => {
-      console.log('=====', div.innerText);
-      if(div.innerText.trim().toLowerCase() === 'последние 3 дня') {
+      console.log("=====", div.innerText);
+      if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
         div.click();
       }
-    })
-  })
+    });
+  });
   console.log(333);
 
   const rowsResults = await page.$$eval("div.result-event", (els) => {
-    const timeWhen = Array.from(els);
-    timeWhen.forEach((div) => {
-      const dataResult = div.querySelector('td.date');
-      const divDate = dataResult.firstChild;
-      if(divDate.innerText) { // Если есть дата в таблице
-        // Обрабатываем результат
+    const gameRowsDOM = Array.from(els);
+    const gameRows = [];
+    gameRowsDOM.forEach((game) => {
+      const newObj = {
+        players: game.querySelector("td.event-name-container").innerText.trim(),
+        result: game.querySelector("td.value").innerText.trim(),
+        dataResult: game.querySelector("td.date").innerText?.trim(),
+      };
 
+      if (newObj.dataResult) {
+        // Если есть дата в таблице
+        // Обрабатываем результат
+        // console.log('=!====', players,'===', result,'===', dataResult);
+        gameRows.push(newObj);
       }
-    })
-  })
+    });
+    console.log("ALL", gameRows); // Есть массив с результатами
+
+    // Отправляем на backend
+    const sendOnBackend = async (resultLines) => {
+      console.log("Длина массива", resultLines.length);
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        body: JSON.stringify(resultLines),
+      };
+      try {
+        const res = await fetch("http://localhost:3000/tennis/results", options);
+        console.log("res", await res.json());
+      } catch (e) {
+        console.log("ERROR UPLOAD", e);
+      }
+    };
+
+    sendOnBackend(gameRows);
+  });
+
   console.log(444);
 
-
-
   // await browser.close(); //========================================================== = = = =
-}
+};
 
 app();
