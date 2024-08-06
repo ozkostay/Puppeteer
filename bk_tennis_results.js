@@ -58,11 +58,19 @@ const app = async () => {
     const gameRowsDOM = Array.from(els);
     const gameRows = [];
     gameRowsDOM.forEach((game) => {
+      console.log('+++', game.querySelector("td.value"));
+      console.log('---', game.querySelector("td.value")?.innerText);
       const newObj = {
-        players: game.querySelector("td.event-name-container").innerText.trim(),
-        result: game.querySelector("td.value").innerText.trim(),
-        dataResult: game.querySelector("td.date").innerText?.trim(),
+        players: game.querySelector("td.event-name-container").innerText?.trim(),
+        result: game.querySelector("td.value")?.innerText.trim(),
+        dataResult: game.querySelector("td.date")?.innerText.trim(),
       };
+
+      // const newObj = {
+      //   players: game.querySelector("td.event-name-container").innerText?.trim(),
+      //   result: game.querySelector("td.value").innerText?.trim(),
+      //   dataResult: game.querySelector("td.date").innerText?.trim(),
+      // };
 
       if (newObj.dataResult) {
         // Если есть дата в таблице
@@ -85,7 +93,7 @@ const app = async () => {
         body: JSON.stringify(resultLines),
       };
       try {
-        const res = await fetch(`${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`, options);
+        const res = await fetch(`http://localhost:3001/tennis/results`, options);
         console.log("res", await res.json());
       } catch (e) {
         console.log("ERROR UPLOAD", e);
