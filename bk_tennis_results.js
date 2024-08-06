@@ -85,7 +85,7 @@ const app = async () => {
         body: JSON.stringify(resultLines),
       };
       try {
-        const res = await fetch("http://localhost:3000/tennis/results", options);
+        const res = await fetch(`${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`, options);
         console.log("res", await res.json());
       } catch (e) {
         console.log("ERROR UPLOAD", e);
