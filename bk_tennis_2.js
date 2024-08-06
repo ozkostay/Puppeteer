@@ -6,6 +6,10 @@ config();
 const bd = [];
 //==========
 const app = async () => {
+  console.log('process.env.HEADLESS', process.env.HEADLESS);
+  console.log('process.env.SPORT_URL', process.env.SPORT_URL);
+  console.log('process.env.SPORT_PORT', process.env.SPORT_PORT);
+
   const browser = await puppeteer.launch({
     headless: process.env.HEADLESS, // TRUE - не показывать браузер
   });
