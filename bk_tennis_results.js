@@ -17,7 +17,7 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     await new Promise((r) => setTimeout(r, 10));
     // page.keyboard.press("PageDown");
   }
@@ -53,6 +53,14 @@ const app = async () => {
     });
   });
   console.log(333);
+
+  for (let i = 0; i < 1000; i += 1) {
+    await new Promise((r) => setTimeout(r, 50));
+    // page.keyboard.press("End");
+    page.keyboard.press("PageDown");
+  }
+
+  console.log(333-1);
 
   const rowsResults = await page.$$eval("div.result-event", (els) => {
     const gameRowsDOM = Array.from(els);
