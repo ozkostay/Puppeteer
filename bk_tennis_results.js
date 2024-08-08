@@ -54,7 +54,7 @@ const app = async () => {
   });
   console.log(333);
 
-  for (let i = 0; i < 400; i += 1) {
+  for (let i = 0; i < 700; i += 1) {
     await new Promise((r) => setTimeout(r, 50));
     // page.keyboard.press("End");
     page.keyboard.press("PageDown");
