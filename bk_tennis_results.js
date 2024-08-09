@@ -47,14 +47,15 @@ const app = async () => {
     const timeWhen = Array.from(els);
     timeWhen.forEach((div) => {
       console.log("=====", div.innerText);
-      if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
+      // if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
+        if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
         div.click();
       }
     });
   });
   console.log(333);
 
-  for (let i = 0; i < 700; i += 1) {
+  for (let i = 0; i < 1400; i += 1) {
     await new Promise((r) => setTimeout(r, 50));
     // page.keyboard.press("End");
     page.keyboard.press("PageDown");
@@ -101,7 +102,7 @@ const app = async () => {
         body: JSON.stringify(resultLines),
       };
       try {
-        const res = await fetch(`http://localhost:3001/tennis/results`, options);
+        const res = await fetch(`http://localhost:3000/tennis/results`, options);
         console.log("res", await res.json());
       } catch (e) {
         console.log("ERROR UPLOAD", e);
