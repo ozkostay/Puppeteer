@@ -255,7 +255,7 @@ const app = async () => {
   };
 
   const startToBackend = new Date();
-  // sendOnBackend(bd);
+  sendOnBackend(bd);
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
 }; //end =======
