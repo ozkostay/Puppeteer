@@ -232,7 +232,7 @@ const app = async () => {
   bd.forEach((i) => {
     console.log(i.turnament, i.name1);
   })
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
@@ -247,7 +247,7 @@ const app = async () => {
     };
     try {
       // const res = await fetch(`${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/pars`, options);
-      const res = await fetch(`http://localhost:3001/football/pars`, options);
+      const res = await fetch(`http://localhost:3000/football/pars`, options);
       console.log("res", await res.json());
     } catch (e) {
       console.log("ERROR UPLOAD", e);
