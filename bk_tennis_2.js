@@ -1,14 +1,14 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
-import { config } from 'dotenv';
+import { config } from "dotenv";
 config();
 
 const bd = [];
 //==========
 const app = async () => {
-  console.log('process.env.HEADLESS', process.env.HEADLESS);
-  console.log('process.env.SPORT_URL', process.env.SPORT_URL);
-  console.log('process.env.SPORT_PORT', process.env.SPORT_PORT);
+  console.log("process.env.HEADLESS", process.env.HEADLESS);
+  console.log("process.env.SPORT_URL", process.env.SPORT_URL);
+  console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
   const browser = await puppeteer.launch({
     headless: process.env.HEADLESS, // TRUE - не показывать браузер
@@ -76,7 +76,6 @@ const app = async () => {
         return acc + plus;
       }, 0);
       if (check > 0) return;
-      
 
       console.log("=!===== ", turnamentName, surface);
 
@@ -206,8 +205,8 @@ const app = async () => {
       body: JSON.stringify(lines),
     };
     try {
-      // const res = await fetch(`${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/pars`, options);
-      const res = await fetch(`http://localhost:3000/tennis/pars`, options);
+      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/pars`;
+      const res = await fetch(url, options);
       console.log("res", await res.json());
     } catch (e) {
       console.log("ERROR UPLOAD", e);
@@ -216,8 +215,8 @@ const app = async () => {
 
   const startToBackend = new Date();
   sendOnBackend(bd);
-  console.log("Время выполнения ", new Date() - startToBackend );
-  console.log(999 );
+  console.log("Время выполнения ", new Date() - startToBackend);
+  console.log(999);
 }; //end =======
 
 app();
