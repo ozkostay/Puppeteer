@@ -1,5 +1,5 @@
 #!/bin/bash
-echo Начало ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.txt
+echo Начало ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
 
 cd /mnt/arch/linestat_prod/Puppeteer/
 
