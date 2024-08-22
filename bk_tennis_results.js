@@ -17,6 +17,7 @@ const app = async () => {
     headless: false, // TRUE - не показывать браузер
   });
 
+  
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
   const page = await browser.newPage();
