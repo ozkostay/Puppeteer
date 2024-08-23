@@ -24,14 +24,14 @@ const app = async () => {
     waitUntil: "domcontentloaded",
   });
 
-  // Press 'PageDown' until we load the page completely
+  // Ждем загрузку страницы
   console.log(111);
   for (let i = 0; i < 500; i += 1) {
     await new Promise((r) => setTimeout(r, 10));
     // page.keyboard.press("PageDown");
   }
 
-  // Нажимаем чекбокс Теннис
+  // Нажимаем чекбокс Футбол
   const data = await page.$$eval("label.v-label", (els) => {
     const labels = Array.from(els);
     labels.forEach((label) => {
@@ -56,8 +56,8 @@ const app = async () => {
     const timeWhen = Array.from(els);
     timeWhen.forEach((div) => {
       console.log("=====", div.innerText);
-      if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
-      // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
+      if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
+        // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
         div.click();
       }
     });
@@ -65,7 +65,7 @@ const app = async () => {
   });
   console.log(333);
 
-  for (let i = 0; i < 1400; i += 1) {
+  for (let i = 0; i < 2600; i += 1) {
     await new Promise((r) => setTimeout(r, 50));
     // page.keyboard.press("End");
     page.keyboard.press("PageDown");
@@ -73,39 +73,61 @@ const app = async () => {
 
   console.log(3331);
 
-  const rowsResults = await page.$$eval("div.result-event", async (els) => {
-    const gameRowsDOM = Array.from(els);
-    const gameRows = [];
-    gameRowsDOM.forEach((game) => {
-      console.log("+++", game.querySelector("td.value"));
-      console.log("---", game.querySelector("td.value")?.innerText);
-      const newObj = {
-        players: game
-          .querySelector("td.event-name-container")
-          .innerText?.trim(),
-        result: game.querySelector("td.value")?.innerText.trim(),
-        dataResult: game.querySelector("td.date")?.innerText.trim(),
-      };
+  // Проверка нужных турниров
+  const arrGames = await page.$$eval("div.result-category", async (el) => {
+    const arrGamesReturn = [];
+    // console.log('TTT', el);
+    const arrChempionat = [
+      "Россия. Премьер-лига",
+      "Англия. Премьер-лига",
+      "Германия. Бундеслига",
+      "Испания. Примера дивизион",
+      "Италия. Серия A",
+      "Франция. Лига 1",
+      "Португалия. Примейра-лига",
+      "Англия. Чемпион-лига",
+      "Аргентина. Примера дивизион",
+      "Бразилия. Серия A",
+      "Мексика. Примера дивизион",
+    ];
+    const arrTurnamentDOM = Array.from(el);
+    arrTurnamentDOM.forEach((turnDiv) => {
+      const turnamentName = turnDiv.firstChild.textContent.trim();
 
-      // const newObj = {
-      //   players: game.querySelector("td.event-name-container").innerText?.trim(),
-      //   result: game.querySelector("td.value").innerText?.trim(),
-      //   dataResult: game.querySelector("td.date").innerText?.trim(),
-      // };
+      let championatInList = false;
+      arrChempionat.forEach((championat) => {
+        if (championat === turnamentName) championatInList = true;
+      });
+      // const checkChempionat = arrChempionat.reduce((acc, cur) => {
+      //   const plus = turnamentName.includes(cur) ? 1 : 0;
+      //   return acc + plus;
+      // }, 0);
 
-      if (newObj.dataResult) {
-        // Если есть дата в таблице
-        // Обрабатываем результат
-        // console.log('=!====', players,'===', result,'===', dataResult);
-        gameRows.push(newObj);
-      }
+      if (!championatInList) return;
+      // Далее обрабатываем если чеммпионат из списка
+
+      const gameRows = turnDiv.lastChild;
+      const arrGame = Array.from(gameRows.querySelectorAll("div.result-event"));
+      console.log("Tурнир", turnamentName);
+
+      arrGame.forEach((oneGame) => {
+        const newObj = {
+          turnament: turnamentName,
+          players: oneGame
+            .querySelector("td.event-name-container")
+            .innerText?.trim(),
+          result: oneGame.querySelector("td.value")?.innerText.trim(),
+          dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
+        };
+        console.log('=+=',newObj);
+        arrGamesReturn.push(newObj);
+      });
     });
 
-    // console.log("ALL", gameRows); // Есть массив с результатами
-    return gameRows;
+    return arrGamesReturn;
   });
 
-  console.log("", rowsResults);
+  // console.log("", rowsResults);
 
   await browser.close(); //========================================================== = = = =
 
@@ -122,7 +144,7 @@ const app = async () => {
     };
     try {
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/football/results`;
-      console.log('URL', url);
+      console.log("URL", url);
       const res = await fetch(url, options);
       console.log("res", await res.json());
     } catch (e) {
@@ -130,7 +152,7 @@ const app = async () => {
     }
   };
 
-  sendOnBackend(rowsResults);
+  sendOnBackend(arrGames);
 
   console.log(444);
 
