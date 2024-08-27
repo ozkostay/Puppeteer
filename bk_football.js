@@ -12,7 +12,7 @@ const app = async () => {
   const sport = 'football';
 
   const browser = await puppeteer.launch({
-    headless: process.env.HEADLESS, // TRUE - не показывать браузер
+    headless: false // process.env.HEADLESS, // TRUE - не показывать браузер
     // headless: true, // TRUE - не показывать браузер
   });
 
@@ -93,13 +93,16 @@ const app = async () => {
         "Бразилия. Серия A",
         "Мексика. Примера дивизион",
       ];
-      const checkChempionat = arrChempionat.reduce((acc, cur) => {
-        const plus = turnamentName.includes(cur) ? 1 : 0;
-        return acc + plus;
-      }, 0);
-      if (checkChempionat === 0) return;
+      // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
-      console.log("=!===== ", turnamentName, surface);
+      let championatInList = false;
+      arrChempionat.forEach((championat) => {
+        // console.log('987 ', championat, ' ==8== ', turnamentName)
+        if (championat === turnamentName) championatInList = true;
+      });
+      if (!championatInList) return;
+
+      console.log("= Проходим ===== ", turnamentName, surface);
 
       // ========== Labels
       const labels = [];
@@ -233,7 +236,8 @@ const app = async () => {
   bd.forEach((i) => {
     console.log(i.turnament, i.name1);
   })
-  await browser.close(); //========================================================== = = = =
+  
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
