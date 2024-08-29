@@ -12,7 +12,7 @@ const app = async () => {
   const sport = 'football';
 
   const browser = await puppeteer.launch({
-    headless: false // process.env.HEADLESS, // TRUE - не показывать браузер
+    headless: process.env.HEADLESS, // TRUE - не показывать браузер
     // headless: true, // TRUE - не показывать браузер
   });
 
