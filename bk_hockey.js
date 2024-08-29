@@ -9,10 +9,10 @@ const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
-  
-  const sport = 'hockey';
-  const headless = process.env.HEADLESS='false' ? false : true;
-  
+
+  const sport = "hockey";
+  const headless = (process.env.HEADLESS = "false" ? false : true);
+
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
@@ -26,7 +26,7 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
-  
+
   for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
@@ -78,7 +78,7 @@ const app = async () => {
       });
 
       //Исключаем по
-      const arrWords = ["Итоги", "Парный разряд","Женщины"];
+      const arrWords = ["Итоги", "Парный разряд", "Женщины"];
       const check = arrWords.reduce((acc, cur) => {
         const plus = turnamentName.includes(cur) ? 1 : 0;
         return acc + plus;
@@ -86,10 +86,7 @@ const app = async () => {
       if (check > 0) return;
 
       // Исключаем если не в списке
-      const arrChempionat = [
-        "NHL",
-        "КХЛ",
-      ];
+      const arrChempionat = ["NHL", "КХЛ"];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
       let championatInList = false;
@@ -232,8 +229,8 @@ const app = async () => {
   // console.log(bd[0]);
   bd.forEach((i) => {
     console.log(i.turnament, i.name1);
-  })
-  
+  });
+
   await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
@@ -257,12 +254,11 @@ const app = async () => {
   };
 
   const startToBackend = new Date();
-  
-  
-  console.log('BD-', bd);
-  
+
+  console.log("BD-", bd);
+
   sendOnBackend(bd);
-  
+
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
 }; //end =======

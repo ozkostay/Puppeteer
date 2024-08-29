@@ -9,7 +9,7 @@ const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
-  const sport = 'football';
+  const sport = "football";
 
   const browser = await puppeteer.launch({
     headless: process.env.HEADLESS, // TRUE - не показывать браузер
@@ -27,10 +27,14 @@ const app = async () => {
   // Press 'PageDown' until we load the page completely
   console.log(111);
   for (let i = 0; i < 1000; i += 1) {
-    await new Promise((r) => setTimeout(r, 30));
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 30);
+      delTimeout = idTimeOut;
+    });
     page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
   }
-
   console.log(222);
 
   // work with data
@@ -72,7 +76,7 @@ const app = async () => {
       });
 
       //Исключаем по
-      const arrWords = ["Итоги", "Парный разряд","Женщины"];
+      const arrWords = ["Итоги", "Парный разряд", "Женщины"];
       const check = arrWords.reduce((acc, cur) => {
         const plus = turnamentName.includes(cur) ? 1 : 0;
         return acc + plus;
@@ -235,9 +239,9 @@ const app = async () => {
   // console.log(bd[0]);
   bd.forEach((i) => {
     console.log(i.turnament, i.name1);
-  })
-  
-  // await browser.close(); //========================================================== = = = =
+  });
+
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
