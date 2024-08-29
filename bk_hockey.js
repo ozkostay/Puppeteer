@@ -15,8 +15,6 @@ const app = async () => {
 
   console.log("headless", headless);
 
-  return;
-
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
