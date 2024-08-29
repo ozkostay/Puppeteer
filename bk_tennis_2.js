@@ -10,8 +10,11 @@ const app = async () => {
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
+  const sport = "football";
+  const headless = (process.env.HEADLESS = "false" ? false : true);
+
   const browser = await puppeteer.launch({
-    headless: process.env.HEADLESS, // TRUE - не показывать браузер
+    headless: headless, // TRUE - не показывать браузер
   });
 
   // const url = "https://www.marathonbet.ru/su/live/popular?ecids=11500730,3219999,6899838,3241271,13765822,6899932,6843737,11945367,7236917,4357735,15801188,15742892,18877691,16059890,7194839,7198288,6765552";
