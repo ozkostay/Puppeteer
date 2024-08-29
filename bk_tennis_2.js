@@ -10,7 +10,7 @@ const app = async () => {
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
-  const sport = "football";
+  const sport = "tennis";
   const headless = (process.env.HEADLESS = "false" ? false : true);
 
   const browser = await puppeteer.launch({
@@ -208,7 +208,7 @@ const app = async () => {
       body: JSON.stringify(lines),
     };
     try {
-      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/pars`;
+      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
       const res = await fetch(url, options);
       console.log("res", await res.json());
     } catch (e) {
