@@ -9,9 +9,11 @@ const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
-  
+
   const sport = "football";
-  const headless = (process.env.HEADLESS = "false" ? false : true);
+  const headless = process.env.HEADLESS === "false" ? false : true;
+
+  console.log("headless", headless);
 
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
