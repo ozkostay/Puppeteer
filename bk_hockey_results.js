@@ -72,7 +72,7 @@ const app = async () => {
   });
   console.log(333);
 
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
@@ -128,7 +128,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
@@ -151,7 +151,7 @@ const app = async () => {
     }
   };
 
-  // sendOnBackend(arrGames);
+  sendOnBackend(arrGames);
 
   console.log(444, arrGames);
 
