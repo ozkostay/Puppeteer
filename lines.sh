@@ -13,7 +13,7 @@ node bk_football.js
 echo    Страт ХОККЕЙ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
 node bk_hockey.js
 echo    Страт БАСКЕТБОЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-node bk_baskenball.js
+node bk_basketball.js
 echo КонецЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
 
 
