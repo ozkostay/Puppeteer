@@ -1,26 +1,49 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
+// const fs = require("node:fs");
+import fs from 'node:fs';
+
+
 config();
 
+//=====================================================
 const bd = [];
+
+function writeToLog(content) {
+  // return;
+  
+  fs.writeFile(`/home/konst/Документы/konst/IT/MyNew/Puppeteer/res_log.log`, content, { flag: 'a' }, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // file written successfully
+    }
+  });
+}
+
+
 //==========
 const app = async () => {
+  
+  writeToLog(`\n========================== ${Date()}\n`);
+  writeToLog("\nСтарт Результатов баскета\n");
+  
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
   const sport = "basketball";
-  const headless = (process.env.HEADLESS = "false" ? false : true);
-
-  // const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
-  // console.log(url_del);
+  const headless = process.env.HEADLESS === "false" ? false : true;
+  console.log('HEADLESS', headless)
 
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
 
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
+
+  writeToLog("111\n");
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -50,13 +73,14 @@ const app = async () => {
     });
   });
   console.log("=== 1.5");
-
+  writeToLog("=== 1.5\n");
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
     console.log("=== BUTTON", els);
     els[0].click();
   });
   console.log(222);
+  writeToLog("222\n");
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -71,6 +95,7 @@ const app = async () => {
     return "последние 7 дней";
   });
   console.log(333);
+  writeToLog("333\n");
 
   for (let i = 0; i < 500; i += 1) {
     let delTimeout;
@@ -83,6 +108,7 @@ const app = async () => {
   }
 
   console.log(3331);
+  writeToLog("3331\n");
 
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
@@ -155,6 +181,8 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   console.log(444, arrGames);
+  writeToLog("444\n");
+
 
   // await browser.close(); //========================================================== = = = =
 };
