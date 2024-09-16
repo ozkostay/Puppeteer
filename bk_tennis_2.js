@@ -30,10 +30,14 @@ const app = async () => {
   // Press 'PageDown' until we load the page completely
   console.log(111);
   for (let i = 0; i < 1000; i += 1) {
-    await new Promise((r) => setTimeout(r, 10));
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 30);
+      delTimeout = idTimeOut;
+    });
     page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
   }
-
   console.log(222);
 
   // work with data
