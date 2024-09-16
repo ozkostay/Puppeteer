@@ -11,7 +11,7 @@ echo Начало ===  `date` = >> $log_file
 echo    Страт РЕЗУЛЬТАТЫ БАСКЕТБОЛ ===  `date` = >> $log_file
 #node bk_basketball_results.js
 #node bk_basketball.js
-lssss >> $log_file
+ls >> $log_file
 
 echo Конец ===  `date` = >> $log_file
 
