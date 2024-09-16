@@ -13,7 +13,7 @@ const bd = [];
 function writeToLog(content) {
   // return;
   
-  fs.writeFile(`/home/konst/Документы/konst/IT/MyNew/Puppeteer/res_log.log`, content, { flag: 'a' }, (err) => {
+  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
     if (err) {
       console.error(err);
     } else {
