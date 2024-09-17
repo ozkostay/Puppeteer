@@ -12,9 +12,12 @@ const app = async () => {
 
   const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   console.log(url_del);
+  const headless = process.env.HEADLESS === "false" ? false : true;
+  console.log('HEADLESS', headless)
+
 
   const browser = await puppeteer.launch({
-    headless: false, // TRUE - не показывать браузер
+    headless: headless, // TRUE - не показывать браузер
   });
 
   
