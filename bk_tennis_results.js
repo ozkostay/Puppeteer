@@ -1,6 +1,8 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
+import fs from 'node:fs';
+
 config();
 
 const bd = [];
