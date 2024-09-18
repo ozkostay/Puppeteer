@@ -4,11 +4,27 @@ import { config } from "dotenv";
 config();
 
 const bd = [];
+
+function writeToLog(content) {
+  // return;
+  
+  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // file written successfully
+    }
+  });
+}
+
 //==========
 const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
+
+  writeToLog(`\n========================== ${Date()}\n`);
+  writeToLog("Старт Результатов Теннис\n");
 
   const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   console.log(url_del);
@@ -30,6 +46,8 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
+  writeToLog("Теннис 111\n");
+
   for (let i = 0; i < 500; i += 1) {
     await new Promise((r) => setTimeout(r, 10));
     // page.keyboard.press("PageDown");
@@ -54,6 +72,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
+  writeToLog("Теннис 222\n");
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -68,6 +87,7 @@ const app = async () => {
     return "последние 7 дней";
   });
   console.log(333);
+  writeToLog("Теннис 333\n");
 
   for (let i = 0; i < 1400; i += 1) {
     await new Promise((r) => setTimeout(r, 50));
@@ -76,6 +96,7 @@ const app = async () => {
   }
 
   console.log(3331);
+  writeToLog("Теннис 3331\n");
 
   const rowsResults = await page.$$eval("div.result-event", async (els) => {
     const gameRowsDOM = Array.from(els);
@@ -137,6 +158,7 @@ const app = async () => {
   sendOnBackend(rowsResults);
 
   console.log(444);
+  writeToLog("Теннис 444\n");
 
   // await browser.close(); //========================================================== = = = =
 };

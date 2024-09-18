@@ -27,7 +27,7 @@ function writeToLog(content) {
 const app = async () => {
   
   writeToLog(`\n========================== ${Date()}\n`);
-  writeToLog("\nСтарт Результатов баскета\n");
+  writeToLog("Старт Результатов баскета\n");
   
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
@@ -43,7 +43,7 @@ const app = async () => {
 
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
-  writeToLog("111\n");
+  writeToLog("Баскетбол 111\n");
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -73,14 +73,14 @@ const app = async () => {
     });
   });
   console.log("=== 1.5");
-  writeToLog("=== 1.5\n");
+  writeToLog("Баскетбол === 1.5\n");
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
     console.log("=== BUTTON", els);
     els[0].click();
   });
   console.log(222);
-  writeToLog("222\n");
+  writeToLog("Баскетбол 222\n");
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -95,7 +95,7 @@ const app = async () => {
     return "последние 7 дней";
   });
   console.log(333);
-  writeToLog("333\n");
+  writeToLog("Баскетбол 333\n");
 
   for (let i = 0; i < 500; i += 1) {
     let delTimeout;
@@ -108,7 +108,7 @@ const app = async () => {
   }
 
   console.log(3331);
-  writeToLog("3331\n");
+  writeToLog("Баскетбол 3331\n");
 
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
@@ -181,7 +181,7 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   console.log(444, arrGames);
-  writeToLog("444\n");
+  writeToLog("Баскетбол 444\n");
 
 
   // await browser.close(); //========================================================== = = = =
