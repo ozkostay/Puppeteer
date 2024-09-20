@@ -90,8 +90,9 @@ const app = async () => {
       // Исключаем если не в списке
       const arrChempionat = [
         "NBA",
-        "Лига ВТБ",
-        "WNBA"
+        "Лига ВТБ. Мужчины",
+        "WNBA",
+        "Германия. Мужчины. Бундеслига"
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
