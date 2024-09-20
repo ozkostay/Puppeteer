@@ -1,7 +1,7 @@
 #!/bin/bash
 
-dirPupet=' /mnt/arch/linestat_prod/Puppeteer/'
-#dirPupet='/home/konst/Документы/konst/IT/MyNew/Puppeteer'
+#dirPupet=' /mnt/arch/linestat_prod/Puppeteer/'
+dirPupet='/home/konst/Документы/konst/IT/MyNew/Puppeteer'
 log_file='log-lines-res.log'
 cd $dirPupet
 

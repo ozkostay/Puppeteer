@@ -8,8 +8,6 @@ config();
 const bd = [];
 
 function writeToLog(content) {
-  // return;
-  
   fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
     if (err) {
       console.error(err);
@@ -48,7 +46,7 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
-  writeToLog("Теннис 111\n");
+  writeToLog(`Теннис 111 ${Date}\n`);
 
   for (let i = 0; i < 500; i += 1) {
     await new Promise((r) => setTimeout(r, 10));
@@ -74,7 +72,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
-  writeToLog("Теннис 222\n");
+  writeToLog(`Теннис 222 ${Date}\n`);
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -88,17 +86,21 @@ const app = async () => {
     });
     return "последние 7 дней";
   });
-  console.log(333);
-  writeToLog("Теннис 333\n");
+  console.log(333, Date());
+  writeToLog(`Теннис 333 ${Date}\n`);
 
-  for (let i = 0; i < 1400; i += 1) {
-    await new Promise((r) => setTimeout(r, 50));
-    // page.keyboard.press("End");
+  for (let i = 0; i < 1000; i += 1) {
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 30);
+      delTimeout = idTimeOut;
+    });
     page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
   }
 
-  console.log(3331);
-  writeToLog("Теннис 3331\n");
+  console.log(3331, Date());
+  writeToLog(`Теннис 3331 ${Date}\n`);
 
   const rowsResults = await page.$$eval("div.result-event", async (els) => {
     const gameRowsDOM = Array.from(els);
@@ -160,7 +162,7 @@ const app = async () => {
   sendOnBackend(rowsResults);
 
   console.log(444);
-  writeToLog("Теннис 444\n");
+  writeToLog(`Теннис 444 ${Date}\n`);
 
   // await browser.close(); //========================================================== = = = =
 };

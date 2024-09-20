@@ -11,8 +11,6 @@ config();
 const bd = [];
 
 function writeToLog(content) {
-  // return;
-  
   fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
     if (err) {
       console.error(err);
@@ -43,7 +41,7 @@ const app = async () => {
 
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
-  writeToLog("Баскетбол 111\n");
+  writeToLog(`Баскетбол 111 ${Date()}\n`);
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -80,7 +78,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
-  writeToLog("Баскетбол 222\n");
+  writeToLog(`Баскетбол 222 ${Date()}\n`);
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -94,10 +92,10 @@ const app = async () => {
     });
     return "последние 7 дней";
   });
-  console.log(333);
-  writeToLog("Баскетбол 333\n");
+  console.log(333, Date());
+  writeToLog(`Баскетбол 333 ${Date()}\n`);
 
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
@@ -107,8 +105,8 @@ const app = async () => {
     clearTimeout(delTimeout);
   }
 
-  console.log(3331);
-  writeToLog("Баскетбол 3331\n");
+  console.log(3331, Date());
+  writeToLog(`Баскетбол 3331 ${Date()}\n`);
 
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
@@ -181,7 +179,7 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   console.log(444, arrGames);
-  writeToLog("Баскетбол 444\n");
+  writeToLog(`Баскетбол 444 ${Date()}\n`);
 
 
   // await browser.close(); //========================================================== = = = =

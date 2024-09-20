@@ -1,9 +1,22 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
+import fs from 'node:fs';
+
 config();
 
+function writeToLog(content) {
+  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      // file written successfully
+    }
+  });
+}
+
 const bd = [];
+
 //==========
 const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
@@ -29,13 +42,17 @@ const app = async () => {
     waitUntil: "domcontentloaded",
   });
 
+  console.log(111);
+  writeToLog(`Хоккей 111 ${Date}\n`);
+
   // Ждем загрузку страницы
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
-      const idTimeOut = setTimeout(() => resolve(), 10);
+      const idTimeOut = setTimeout(() => resolve(), 30);
       delTimeout = idTimeOut;
     });
+    page.keyboard.press("PageDown");
     clearTimeout(delTimeout);
   }
 
@@ -59,6 +76,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
+  writeToLog(`Хоккей 222 ${Date}\n`);
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -72,9 +90,10 @@ const app = async () => {
     });
     return "последние 7 дней";
   });
-  console.log(333);
+  console.log(333, Date());
+  writeToLog(`Хоккей 333 ${Date}\n`);
 
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
@@ -84,7 +103,8 @@ const app = async () => {
     clearTimeout(delTimeout);
   }
 
-  console.log(3331);
+  console.log(3331, Date());
+  writeToLog(`Хоккей 3331 ${Date}\n`);
 
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
@@ -156,6 +176,7 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   console.log(444, arrGames);
+  writeToLog(`Хоккей 444 ${Date}\n`);
 
   // await browser.close(); //========================================================== = = = =
 };
