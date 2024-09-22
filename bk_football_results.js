@@ -17,6 +17,7 @@ function writeToLog(content) {
 
 const bd = [];
 //==========
+writeToLog(`Старт результатов Футбол\n`);
 const app = async () => {
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
@@ -180,7 +181,7 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   console.log(444);
-  writeToLog(`Футбол 444 ${Date()}\n`);
+  writeToLog(`Футбол 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
 };

@@ -15,6 +15,7 @@ function writeToLog(content) {
   });
 }
 
+writeToLog(`Старт результатов Хоккей\n`);
 const bd = [];
 
 //==========
@@ -171,7 +172,7 @@ const app = async () => {
   sendOnBackend(arrGames);
 
   // console.log(444, arrGames);
-  writeToLog(`Хоккей 444 ${Date()}\n`);
+  writeToLog(`Хоккей 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
 };

@@ -23,7 +23,7 @@ const app = async () => {
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
-  writeToLog(`\n========================== ${Date()}\n`);
+  writeToLog(`\n=2========================= ${Date()}\n`);
   writeToLog("Старт Результатов Теннис\n");
 
   const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
@@ -160,7 +160,7 @@ const app = async () => {
   sendOnBackend(rowsResults);
 
   console.log(444);
-  writeToLog(`Теннис 444 ${Date()}\n`);
+  writeToLog(`Теннис 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
 };
