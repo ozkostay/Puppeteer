@@ -132,7 +132,7 @@ const app = async () => {
     return gameRows;
   });
 
-  console.log("", rowsResults);
+  // console.log("", rowsResults);
 
   await browser.close(); //========================================================== = = = =
 
