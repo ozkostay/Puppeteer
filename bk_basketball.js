@@ -92,7 +92,7 @@ const app = async () => {
         "NBA",
         "Лига ВТБ. Мужчины",
         "WNBA",
-        "Германия. Мужчины. Бундеслига"
+        "Германия. Мужчины. Бундеслига",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
@@ -191,10 +191,10 @@ const app = async () => {
         prepObj.win1_odds = Number(tempSoursObj.kefsAllTemp[0]);
         prepObj.win2_odds = Number(tempSoursObj.kefsAllTemp[1]);
       }
-      
-      console.log('sss1', prepObj.win1_odds);
-      console.log('sss2', prepObj.win2_odds);
-      console.log('sss3', tempSoursObj.kefsAllTemp.length);
+
+      console.log("sss1", prepObj.win1_odds);
+      console.log("sss2", prepObj.win2_odds);
+      console.log("sss3", tempSoursObj.kefsAllTemp.length);
 
       if (tempSoursObj.kefsAllTemp[2].split("=&=")[0] !== "—") {
         prepObj.handicap1_value = Number(
@@ -231,7 +231,7 @@ const app = async () => {
   });
 
   console.log(bd);
-  
+
   bd.forEach((i) => {
     // console.log(i.turnament, i.name1);
   });
@@ -251,7 +251,7 @@ const app = async () => {
     };
     try {
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
-      console.log('url', url);
+      console.log("url", url);
       const res = await fetch(url, options);
       console.log("res", await res.json());
     } catch (e) {
@@ -261,7 +261,7 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  console.log("BD-", bd);
+  // console.log("BD-", bd);
 
   sendOnBackend(bd);
 

@@ -242,7 +242,7 @@ const app = async () => {
 
   // console.log(bd[0]);
   bd.forEach((i) => {
-    console.log(i.turnament, i.name1);
+    // console.log(i.turnament, i.name1);
   });
 
   await browser.close(); //========================================================== = = = =
@@ -261,16 +261,19 @@ const app = async () => {
     try {
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
       const res = await fetch(url, options);
-      console.log("res", await res.json());
+      // console.log("res", await res.json());
     } catch (e) {
       console.log("ERROR UPLOAD", e);
     }
   };
 
   const startToBackend = new Date();
+
   sendOnBackend(bd);
+  
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
+
 }; //end =======
 
 app();

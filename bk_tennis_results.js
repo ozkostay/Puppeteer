@@ -1,14 +1,14 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
-import fs from 'node:fs';
+import fs from "node:fs";
 
 config();
 
 const bd = [];
 
 function writeToLog(content) {
-  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+  fs.writeFile(`res_log.log`, content, { flag: "a" }, (err) => {
     if (err) {
       console.error(err);
     } else {
@@ -29,14 +29,12 @@ const app = async () => {
   const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   console.log(url_del);
   const headless = process.env.HEADLESS === "false" ? false : true;
-  console.log('HEADLESS', headless)
-
+  console.log("HEADLESS", headless);
 
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
 
-  
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
   const page = await browser.newPage();
@@ -46,7 +44,7 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
-  writeToLog(`Теннис 111 ${Date}\n`);
+  writeToLog(`Теннис 111 ${Date()}\n`);
 
   for (let i = 0; i < 500; i += 1) {
     await new Promise((r) => setTimeout(r, 10));
@@ -72,7 +70,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
-  writeToLog(`Теннис 222 ${Date}\n`);
+  writeToLog(`Теннис 222 ${Date()}\n`);
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -87,7 +85,7 @@ const app = async () => {
     return "последние 7 дней";
   });
   console.log(333, Date());
-  writeToLog(`Теннис 333 ${Date}\n`);
+  writeToLog(`Теннис 333 ${Date()}\n`);
 
   for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
@@ -100,7 +98,7 @@ const app = async () => {
   }
 
   console.log(3331, Date());
-  writeToLog(`Теннис 3331 ${Date}\n`);
+  writeToLog(`Теннис 3331 ${Date()}\n`);
 
   const rowsResults = await page.$$eval("div.result-event", async (els) => {
     const gameRowsDOM = Array.from(els);
@@ -151,7 +149,7 @@ const app = async () => {
     };
     try {
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
-      console.log('URL', url);
+      console.log("URL", url);
       const res = await fetch(url, options);
       console.log("res", await res.json());
     } catch (e) {
@@ -162,7 +160,7 @@ const app = async () => {
   sendOnBackend(rowsResults);
 
   console.log(444);
-  writeToLog(`Теннис 444 ${Date}\n`);
+  writeToLog(`Теннис 444 ${Date()}\n`);
 
   // await browser.close(); //========================================================== = = = =
 };

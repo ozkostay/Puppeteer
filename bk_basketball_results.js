@@ -2,8 +2,7 @@ import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
 // const fs = require("node:fs");
-import fs from 'node:fs';
-
+import fs from "node:fs";
 
 config();
 
@@ -11,7 +10,7 @@ config();
 const bd = [];
 
 function writeToLog(content) {
-  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+  fs.writeFile(`res_log.log`, content, { flag: "a" }, (err) => {
     if (err) {
       console.error(err);
     } else {
@@ -20,20 +19,18 @@ function writeToLog(content) {
   });
 }
 
-
 //==========
 const app = async () => {
-  
   writeToLog(`\n========================== ${Date()}\n`);
   writeToLog("Старт Результатов баскета\n");
-  
+
   console.log("process.env.HEADLESS", process.env.HEADLESS);
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
   const sport = "basketball";
   const headless = process.env.HEADLESS === "false" ? false : true;
-  console.log('HEADLESS', headless)
+  console.log("HEADLESS", headless);
 
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
@@ -57,7 +54,6 @@ const app = async () => {
     });
     clearTimeout(delTimeout);
   }
-
 
   // Нажимаем чекбокс Хоккей
   const data = await page.$$eval("label.v-label", (els) => {
@@ -113,9 +109,10 @@ const app = async () => {
     const arrGamesReturn = [];
     // console.log('TTT', el);
     const arrChempionat = [
-      "NBA", 
-      "Лига ВТБ",
-      "WNBA"
+      "NBA",
+      "Лига ВТБ. Мужчины",
+      "WNBA",
+      "Германия. Мужчины. Бундеслига",
     ];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
@@ -127,8 +124,8 @@ const app = async () => {
       });
 
       if (!championatInList) return;
-        
-      console.log('Проходим', turnamentName);
+
+      console.log("Проходим", turnamentName);
       // Далее обрабатываем если чеммпионат из списка
       const gameRows = turnDiv.lastChild;
       const arrGame = Array.from(gameRows.querySelectorAll("div.result-event"));
@@ -139,11 +136,12 @@ const app = async () => {
           turnament: turnamentName,
           players: oneGame
             .querySelector("td.event-name-container")
-            .innerText?.trim().replace("@", "-"),
+            .innerText?.trim()
+            .replace("@", "-"),
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };
-        console.log('=+=',newObj);
+        console.log("=+=", newObj);
         arrGamesReturn.push(newObj);
       });
     });
@@ -178,9 +176,8 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444, arrGames);
+  console.log(444);
   writeToLog(`Баскетбол 444 ${Date()}\n`);
-
 
   // await browser.close(); //========================================================== = = = =
 };

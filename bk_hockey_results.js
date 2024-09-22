@@ -1,12 +1,12 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
-import fs from 'node:fs';
+import fs from "node:fs";
 
 config();
 
 function writeToLog(content) {
-  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+  fs.writeFile(`res_log.log`, content, { flag: "a" }, (err) => {
     if (err) {
       console.error(err);
     } else {
@@ -25,8 +25,7 @@ const app = async () => {
 
   const sport = "hockey";
   const headless = process.env.HEADLESS === "false" ? false : true;
-  console.log('HEADLESS', headless)
-
+  console.log("HEADLESS", headless);
 
   // const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   // console.log(url_del);
@@ -43,7 +42,7 @@ const app = async () => {
   });
 
   console.log(111);
-  writeToLog(`Хоккей 111 ${Date}\n`);
+  writeToLog(`Хоккей 111 ${Date()}\n`);
 
   // Ждем загрузку страницы
   for (let i = 0; i < 1000; i += 1) {
@@ -55,7 +54,6 @@ const app = async () => {
     page.keyboard.press("PageDown");
     clearTimeout(delTimeout);
   }
-
 
   // Нажимаем чекбокс Хоккей
   const data = await page.$$eval("label.v-label", (els) => {
@@ -76,7 +74,7 @@ const app = async () => {
     els[0].click();
   });
   console.log(222);
-  writeToLog(`Хоккей 222 ${Date}\n`);
+  writeToLog(`Хоккей 222 ${Date()}\n`);
 
   // Нажимаем последние 3 дня
   const threeDays = await page.$$eval("div.v-list-item__content", (els) => {
@@ -91,7 +89,7 @@ const app = async () => {
     return "последние 7 дней";
   });
   console.log(333, Date());
-  writeToLog(`Хоккей 333 ${Date}\n`);
+  writeToLog(`Хоккей 333 ${Date()}\n`);
 
   for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
@@ -104,16 +102,13 @@ const app = async () => {
   }
 
   console.log(3331, Date());
-  writeToLog(`Хоккей 3331 ${Date}\n`);
+  writeToLog(`Хоккей 3331 ${Date()}\n`);
 
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
     const arrGamesReturn = [];
     // console.log('TTT', el);
-    const arrChempionat = [
-      "NHL",
-      "КХЛ",
-    ];
+    const arrChempionat = ["NHL", "КХЛ"];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
       const turnamentName = turnDiv.firstChild.textContent.trim();
@@ -124,8 +119,8 @@ const app = async () => {
       });
 
       if (!championatInList) return;
-        
-      console.log('Проходим', turnamentName);
+
+      console.log("Проходим", turnamentName);
       // Далее обрабатываем если чеммпионат из списка
       const gameRows = turnDiv.lastChild;
       const arrGame = Array.from(gameRows.querySelectorAll("div.result-event"));
@@ -140,7 +135,7 @@ const app = async () => {
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };
-        console.log('=+=',newObj);
+        console.log("=+=", newObj);
         arrGamesReturn.push(newObj);
       });
     });
@@ -175,8 +170,8 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444, arrGames);
-  writeToLog(`Хоккей 444 ${Date}\n`);
+  // console.log(444, arrGames);
+  writeToLog(`Хоккей 444 ${Date()}\n`);
 
   // await browser.close(); //========================================================== = = = =
 };

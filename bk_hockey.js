@@ -230,7 +230,7 @@ const app = async () => {
 
   // console.log(bd[0]);
   bd.forEach((i) => {
-    console.log(i.turnament, i.name1);
+    // console.log(i.turnament, i.name1);
   });
 
   await browser.close(); //========================================================== = = = =
@@ -257,7 +257,7 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  console.log("BD-", bd);
+  // console.log("BD-", bd);
 
   sendOnBackend(bd);
 
