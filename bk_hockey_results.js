@@ -46,10 +46,10 @@ const app = async () => {
   writeToLog(`Хоккей 111 ${Date()}\n`);
 
   // Ждем загрузку страницы
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 5; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
-      const idTimeOut = setTimeout(() => resolve(), 30);
+      const idTimeOut = setTimeout(() => resolve(), 1000);
       delTimeout = idTimeOut;
     });
     page.keyboard.press("PageDown");

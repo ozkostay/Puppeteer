@@ -46,10 +46,10 @@ const app = async () => {
   });
 
   // Ждем загрузку страницы
-  for (let i = 0; i < 500; i += 1) {
+  for (let i = 0; i < 5; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
-      const idTimeOut = setTimeout(() => resolve(), 10);
+      const idTimeOut = setTimeout(() => resolve(), 1000);
       delTimeout = idTimeOut;
     });
     clearTimeout(delTimeout);

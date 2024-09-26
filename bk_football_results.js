@@ -44,8 +44,8 @@ const app = async () => {
   console.log(111);
   writeToLog(`Футбол 111 ${Date()}\n`);
 
-  for (let i = 0; i < 500; i += 1) {
-    await new Promise((r) => setTimeout(r, 10));
+  for (let i = 0; i < 5; i += 1) {
+    await new Promise((r) => setTimeout(r, 1000));
     // page.keyboard.press("PageDown");
   }
 
