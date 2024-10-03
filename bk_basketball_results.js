@@ -113,10 +113,17 @@ const app = async () => {
       "Лига ВТБ. Мужчины",
       "WNBA",
       "Германия. Мужчины. Бундеслига",
+      "Испания. Мужчины. Лига ACB",
+      "Греция. Мужчины. GBL",
+      "Австралия. Мужчины. NBL",
     ];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
-      const turnamentName = turnDiv.firstChild.textContent.trim();
+      let turnamentName = turnDiv.firstChild.textContent.trim();
+      console.log("WWW", turnamentName);
+      turnamentName = turnamentName.replace(". 1/2 финала", "");
+      turnamentName = turnamentName.replace(". 1/4 финала", "");
+      turnamentName = turnamentName.replace(". 1/8 финала", "");
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
@@ -151,7 +158,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {

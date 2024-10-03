@@ -107,7 +107,7 @@ const app = async () => {
         "Германия. Мужчины. Бундеслига",
         "Испания. Мужчины. Лига ACB",
         "Греция. Мужчины. GBL",
-        "Австралия. Мужчины. NBL",
+        "Австралия. Мужчины. NBL"
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
