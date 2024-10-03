@@ -52,24 +52,31 @@ const app = async () => {
       const turnamentNameArr = [];
       turnamentNameTemp.forEach((item) => {
         const spans = item.querySelectorAll("span");
+        console.log("WWW==============================");
         spans.forEach((span) => {
           const spanText = span.innerText.trim();
+          console.log("WWW", spanText);
           if (
             spanText.toLowerCase().includes("финал") ||
             spanText.toLowerCase().includes("раунд") ||
             spanText.toLowerCase().includes("квалификация") ||
-            spanText.toLowerCase().includes(". 1/8 финала") ||
-            spanText.toLowerCase().includes(". 1/4 финала") ||
-            spanText.toLowerCase().includes(". 1/2 финала") ||
-            spanText.toLowerCase().includes(". полуфинал") ||
-            spanText.toLowerCase().includes(". финал")
+            spanText.toLowerCase().includes("1/8 финала") ||
+            spanText.toLowerCase().includes("1/4 финала") ||
+            spanText.toLowerCase().includes("1/2 финала") ||
+            spanText.toLowerCase().includes("полуфинал") ||
+            spanText.toLowerCase().includes("финал")
           ) {
           } else {
             turnamentNameArr.push(spanText);
           }
         });
       });
-      const turnamentName = turnamentNameArr.join(" ");
+      let turnamentName = turnamentNameArr.join(" ");
+      // Убераем точку если она есть в конце
+      turnamentName =
+        turnamentName.at(-1) === "."
+          ? turnamentName.slice(0, turnamentName.length - 1)
+          : turnamentName;
 
       // surface
       let surface = null;
@@ -98,6 +105,9 @@ const app = async () => {
         "Лига ВТБ. Мужчины",
         "WNBA",
         "Германия. Мужчины. Бундеслига",
+        "Испания. Мужчины. Лига ACB",
+        "Греция. Мужчины. GBL",
+        "Австралия. Мужчины. NBL",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
