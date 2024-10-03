@@ -57,7 +57,12 @@ const app = async () => {
           if (
             spanText.toLowerCase().includes("финал") ||
             spanText.toLowerCase().includes("раунд") ||
-            spanText.toLowerCase().includes("квалификация")
+            spanText.toLowerCase().includes("квалификация") ||
+            spanText.toLowerCase().includes(". 1/8 финала") ||
+            spanText.toLowerCase().includes(". 1/4 финала") ||
+            spanText.toLowerCase().includes(". 1/2 финала") ||
+            spanText.toLowerCase().includes(". полуфинал") ||
+            spanText.toLowerCase().includes(". финал")
           ) {
           } else {
             turnamentNameArr.push(spanText);
