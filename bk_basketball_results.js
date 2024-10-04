@@ -158,7 +158,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
