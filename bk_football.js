@@ -100,6 +100,7 @@ const app = async () => {
         "Аргентина. Примера дивизион",
         "Бразилия. Серия A",
         "Мексика. Примера дивизион",
+        "Футбол. США. MLS",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 

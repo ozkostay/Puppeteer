@@ -115,6 +115,7 @@ const app = async () => {
       "Аргентина. Примера дивизион",
       "Бразилия. Серия A",
       "Мексика. Примера дивизион",
+      "Футбол. США. MLS",
     ];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
