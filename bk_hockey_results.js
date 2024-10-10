@@ -132,7 +132,8 @@ const app = async () => {
           turnament: turnamentName,
           players: oneGame
             .querySelector("td.event-name-container")
-            .innerText?.trim(),
+            .innerText?.trim()
+            .replace("@", "-"),
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };
