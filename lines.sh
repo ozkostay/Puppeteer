@@ -1,22 +1,27 @@
 #!/bin/bash
-echo = >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-echo Начало ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-
-cd /mnt/arch/linestat_prod/Puppeteer/
 
 
-echo    Старт ТЕННИС ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
+script_dir=$(pwd)
+log_file="$script_dir/log-lines.log"
+
+echo = >> $log_file
+
+
+echo Начало ===  `date` >> $log_file
+
+cd $script_dir
+
+echo    Старт ТЕННИС ===  `date` >> $log_file
 node bk_tennis_2.js
 
-echo    Страт ФУТБОЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
+echo    Страт ФУТБОЛ ===  `date` >> $log_file
 node bk_football.js
 
-echo    Страт БАСКЕТБОЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
+echo    Страт БАСКЕТБОЛ ===  `date` >> $log_file
 node bk_basketball.js
 
-echo    Страт ХОККЕЙ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
+echo    Страт ХОККЕЙ ===  `date` >> $log_file
 node bk_hockey.js
 
-echo Конец ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-
+echo Конец ===  `date` >> $log_file
 
