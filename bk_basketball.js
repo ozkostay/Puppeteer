@@ -107,7 +107,7 @@ const app = async () => {
         "Германия. Мужчины. Бундеслига",
         "Испания. Мужчины. Лига ACB",
         "Греция. Мужчины. GBL",
-        "Австралия. Мужчины. NBL"
+        "Австралия. Мужчины. NBL",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
@@ -171,6 +171,7 @@ const app = async () => {
         surface,
         lineRows,
         rowsInTurnament,
+        timestamp: Date(),
       });
     });
     return retData;
@@ -185,6 +186,7 @@ const app = async () => {
       }
 
       const prepObj = {
+        timestamp: turnament.timestamp,
         turnament: turnament.turnamentName,
         surface: turnament.surface,
         name1: null,
@@ -245,11 +247,11 @@ const app = async () => {
     });
   });
 
-  console.log(bd);
+  // console.log(bd);
 
-  bd.forEach((i) => {
-    // console.log(i.turnament, i.name1);
-  });
+  // bd.forEach((i) => {
+  //   // console.log(i.turnament, i.name1);
+  // });
 
   await browser.close(); //========================================================== = = = =
 
@@ -276,7 +278,7 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  // console.log("BD-", bd);
+  console.log("BD-", bd);
 
   sendOnBackend(bd);
 

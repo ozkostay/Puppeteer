@@ -138,6 +138,7 @@ const app = async () => {
         surface,
         lineRows,
         rowsInTurnament,
+        timestamp: Date(),
       });
     });
     return retData;
@@ -148,6 +149,7 @@ const app = async () => {
     turnament.lineRows.forEach((lineRow) => {
       const tempSoursObj = lineRow;
       const prepObj = {
+        timestamp: turnament.timestamp,
         turnament: turnament.turnamentName,
         surface: turnament.surface,
         name1: null,

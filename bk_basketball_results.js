@@ -183,7 +183,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444);
+  console.log(444, arrGames);
   writeToLog(`Баскетбол 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
