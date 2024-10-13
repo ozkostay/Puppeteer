@@ -1,22 +1,37 @@
 #!/bin/bash
-echo = >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-echo Начало ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
 
-cd /mnt/arch/linestat_prod/Puppeteer/
+script_dir="/var/Puppeteer"
+log_file="$script_dir/log-lines.log"
+
+echo = >> $log_file
+
+if [[ "$HOSTNAME" == "konst-ub22" ]]; then
+  echo "Host work PROD"
+  node_bin=/home/konst/.nvm/versions/node/v20.14.0/bin/node
+elif [[ "$HOSTNAME" == "linestat-mate" ]]; then
+  echo "Host home PROD"
+  node_bin=/home/konst/.nvm/versions/node/v20.17.0/bin/node
+else
+  echo "Host NOT PROD"
+  node_bin=/home/konst/.nvm/versions/node/v20.15.1/bin/node
+fi
 
 
-echo    Старт ТЕННИС ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-node bk_tennis_2.js
+echo Начало ===  `date` >> $log_file
 
-echo    Страт ФУТБОЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-node bk_football.js
+cd $script_dir
 
-echo    Страт БАСКЕТБОЛ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-node bk_basketball.js
+echo    Старт ТЕННИС    ===  `date` >> $log_file
+$node_bin bk_tennis_2.js
 
-echo    Страт ХОККЕЙ ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
-node bk_hockey.js
+echo    Страт ФУТБОЛ    ===  `date` >> $log_file
+$node_bin bk_football.js
 
-echo Конец ===  `date` >> /mnt/arch/linestat_prod/Puppeteer/log-lines.log
+echo    Страт БАСКЕТБОЛ ===  `date` >> $log_file
+$node_bin bk_basketball.js
 
+echo    Страт ХОККЕЙ    ===  `date` >> $log_file
+$node_bin bk_hockey.js
+
+echo Конец ===  `date` >> $log_file
 
