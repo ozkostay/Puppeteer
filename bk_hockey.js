@@ -54,16 +54,23 @@ const app = async () => {
         const spans = item.querySelectorAll("span");
         spans.forEach((span) => {
           const spanText = span.innerText.trim();
+          console.log('===== spanText', spanText);
+          
           if (
             spanText.toLowerCase().includes("финал") ||
             spanText.toLowerCase().includes("раунд") ||
-            spanText.toLowerCase().includes("квалификация")
+            spanText.toLowerCase().includes("квалификация") ||
+            spanText.toLowerCase().includes("1/8 финала") ||
+            spanText.toLowerCase().includes("1/4 финала")
           ) {
           } else {
-            turnamentNameArr.push(spanText);
+            // console.log('=555= spanText', spanText);
+            const textWithoutDot = spanText.replace(".", "");
+            turnamentNameArr.push(textWithoutDot);
           }
         });
       });
+
       const turnamentName = turnamentNameArr.join(" ");
 
       // surface
@@ -93,7 +100,7 @@ const app = async () => {
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
-        // console.log('987 ', championat, ' ==8== ', turnamentName)
+        console.log('987 ', championat, ' ==8== ', turnamentName)
         if (championat === turnamentName) championatInList = true;
       });
       if (!championatInList) return;
@@ -162,7 +169,7 @@ const app = async () => {
     turnament.lineRows.forEach((lineRow) => {
       const tempSoursObj = lineRow;
       if (idx === 0) {
-        console.log("=== lineRow", lineRow, "length", data.length);
+        // console.log("=== lineRow", lineRow, "length", data.length);
       }
 
       const prepObj = {
