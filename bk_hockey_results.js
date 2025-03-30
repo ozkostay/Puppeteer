@@ -82,8 +82,8 @@ const app = async () => {
     const timeWhen = Array.from(els);
     timeWhen.forEach((div) => {
       console.log("=====", div.innerText);
+      //if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
       if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
-        // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
         div.click();
       }
     });
@@ -112,24 +112,28 @@ const app = async () => {
     const arrChempionat = ["NHL", "КХЛ"];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
-      const turnamentName = turnDiv.firstChild.textContent.trim();
-
+      const turnamentNameTemp = turnDiv.firstChild.textContent.trim();
+      const turnamentNameFromDOM = turnamentNameTemp.replace(
+        ". 1/8 финала",
+        ""
+      );
+      console.log("===787===", turnamentNameFromDOM);
       let championatInList = false;
       arrChempionat.forEach((championat) => {
-        if (championat === turnamentName) championatInList = true;
+        if (championat === turnamentNameFromDOM) championatInList = true;
       });
 
       if (!championatInList) return;
 
-      console.log("Проходим", turnamentName);
+      console.log("Проходим", turnamentNameFromDOM);
       // Далее обрабатываем если чеммпионат из списка
       const gameRows = turnDiv.lastChild;
       const arrGame = Array.from(gameRows.querySelectorAll("div.result-event"));
-      console.log("Tурнир", turnamentName);
+      console.log("Tурнир", turnamentNameFromDOM);
 
       arrGame.forEach((oneGame) => {
         const newObj = {
-          turnament: turnamentName,
+          turnament: turnamentNameFromDOM,
           players: oneGame
             .querySelector("td.event-name-container")
             .innerText?.trim()
@@ -145,9 +149,7 @@ const app = async () => {
     return arrGamesReturn;
   });
 
-  // console.log("", rowsResults);
-
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
@@ -170,9 +172,9 @@ const app = async () => {
     }
   };
 
-  sendOnBackend(arrGames);
+  // sendOnBackend(arrGames);
 
-  // console.log(444, arrGames);
+  console.log(444, arrGames);
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
