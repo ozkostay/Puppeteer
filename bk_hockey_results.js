@@ -117,7 +117,7 @@ const app = async () => {
         ". 1/8 финала",
         ""
       );
-      console.log("===787===", turnamentNameFromDOM);
+      // console.log("===787===", turnamentNameFromDOM);
       let championatInList = false;
       arrChempionat.forEach((championat) => {
         if (championat === turnamentNameFromDOM) championatInList = true;
@@ -149,7 +149,7 @@ const app = async () => {
     return arrGamesReturn;
   });
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
@@ -172,7 +172,7 @@ const app = async () => {
     }
   };
 
-  // sendOnBackend(arrGames);
+  sendOnBackend(arrGames);
 
   console.log(444, arrGames);
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
