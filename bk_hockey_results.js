@@ -172,7 +172,7 @@ const app = async () => {
     }
   };
 
-  // sendOnBackend(arrGames);
+  sendOnBackend(arrGames);
 
   console.log(444, arrGames);
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
