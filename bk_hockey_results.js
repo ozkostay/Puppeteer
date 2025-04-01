@@ -82,8 +82,8 @@ const app = async () => {
     const timeWhen = Array.from(els);
     timeWhen.forEach((div) => {
       console.log("=====", div.innerText);
-      //if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
-      if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
+      if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
+      // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
         div.click();
       }
     });
@@ -164,17 +164,17 @@ const app = async () => {
     };
     try {
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/results`;
-      console.log("URL", url);
+      console.log("111URL", url);
       const res = await fetch(url, options);
-      console.log("res", await res.json());
+      console.log("res111", await res.json());
     } catch (e) {
-      console.log("ERROR UPLOAD", e);
+      console.log("111 ERROR UPLOAD", e);
     }
   };
 
   sendOnBackend(arrGames);
 
-  console.log(444, arrGames);
+  // console.log(444, arrGames);
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
