@@ -64,6 +64,18 @@ const app = async () => {
   });
   console.log("=== 1.5");
 
+  // Нажимаем ЗАВЕРШИВШИЕСЯ
+  const buttons = await page.$$eval(".other-filters span", (els) => {
+    const arrSpans = Array.from(els);
+    let buttonFinished = null;
+    arrSpans.forEach((item) => {
+      if (item.outerText == "Завершившиеся") {
+        if (!buttonFinished) buttonFinished = item.closest("button");
+      }
+    });
+    if (buttonFinished) buttonFinished.click();
+  });
+
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
     console.log("=== BUTTON", els);
@@ -159,7 +171,7 @@ const app = async () => {
 
   sendOnBackend(rowsResults);
 
-  console.log(444);
+  console.log(444, "Отправили на бекенд");
   writeToLog(`Теннис 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =

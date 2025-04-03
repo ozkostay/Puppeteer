@@ -1,12 +1,12 @@
 import puppeteer from "puppeteer";
 import fetch from "node-fetch";
 import { config } from "dotenv";
-import fs from 'node:fs';
+import fs from "node:fs";
 
 config();
 
 function writeToLog(content) {
-  fs.writeFile(`res_log.log`, content, { flag: 'a' }, (err) => {
+  fs.writeFile(`res_log.log`, content, { flag: "a" }, (err) => {
     if (err) {
       console.error(err);
     } else {
@@ -26,8 +26,7 @@ const app = async () => {
   const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   console.log(url_del);
   const headless = process.env.HEADLESS === "false" ? false : true;
-  console.log('HEADLESS', headless)
-
+  console.log("HEADLESS", headless);
 
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
@@ -68,21 +67,11 @@ const app = async () => {
     const arrSpans = Array.from(els);
     let buttonFinished = null;
     arrSpans.forEach((item) => {
-      if(item.outerText == "Завершившиеся") {
-        if (!buttonFinished) buttonFinished = item.closest('button');
+      if (item.outerText == "Завершившиеся") {
+        if (!buttonFinished) buttonFinished = item.closest("button");
       }
-    })
-    // console.log('buttonFinished', buttonFinished)
-    if(buttonFinished) buttonFinished.click();
-    // const aaas = Array.from(els).map(i => i.outerText = "Завершившиеся");
-    // console.log('BUTTONS ', buttonFinished);
-    // labels.forEach((label) => {
-    //   console.log("===", label.innerText);
-    //   if (label.innerText.trim().toLowerCase() === "футбол") {
-    //     label.click();
-    //     return;
-    //   }
-    // });
+    });
+    if (buttonFinished) buttonFinished.click();
   });
 
   // Нажимаем выбор временного диапазона
@@ -168,7 +157,7 @@ const app = async () => {
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };
-        console.log('=+=',newObj);
+        console.log("=+=", newObj);
         arrGamesReturn.push(newObj);
       });
     });
@@ -203,7 +192,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444);
+  console.log(444, "Отправили на бекенд");
   writeToLog(`Футбол 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =

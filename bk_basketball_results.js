@@ -66,6 +66,19 @@ const app = async () => {
       }
     });
   });
+
+  // Нажимаем ЗАВЕРШИВШИЕСЯ
+  const buttons = await page.$$eval(".other-filters span", (els) => {
+    const arrSpans = Array.from(els);
+    let buttonFinished = null;
+    arrSpans.forEach((item) => {
+      if (item.outerText == "Завершившиеся") {
+        if (!buttonFinished) buttonFinished = item.closest("button");
+      }
+    });
+    if (buttonFinished) buttonFinished.click();
+  });
+
   console.log("=== 1.5");
   writeToLog("Баскетбол === 1.5\n");
   // Нажимаем выбор временного диапазона
@@ -183,7 +196,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444, arrGames);
+  console.log(444, "Отправили на бекенд",arrGames);
   writeToLog(`Баскетбол 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =

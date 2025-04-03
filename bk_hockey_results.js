@@ -69,6 +69,18 @@ const app = async () => {
   });
   console.log("=== 1.5");
 
+  // Нажимаем ЗАВЕРШИВШИЕСЯ
+  const buttons = await page.$$eval(".other-filters span", (els) => {
+    const arrSpans = Array.from(els);
+    let buttonFinished = null;
+    arrSpans.forEach((item) => {
+      if (item.outerText == "Завершившиеся") {
+        if (!buttonFinished) buttonFinished = item.closest("button");
+      }
+    });
+    if (buttonFinished) buttonFinished.click();
+  });
+
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
     console.log("=== BUTTON", els);
@@ -83,7 +95,7 @@ const app = async () => {
     timeWhen.forEach((div) => {
       console.log("=====", div.innerText);
       if (div.innerText.trim().toLowerCase() === "последние 3 дня") {
-      // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
+        // if (div.innerText.trim().toLowerCase() === "последние 7 дней") {
         div.click();
       }
     });
@@ -174,7 +186,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  // console.log(444, arrGames);
+  console.log(444, "Отправили на бекенд", arrGames);
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
