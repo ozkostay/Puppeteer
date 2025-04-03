@@ -178,7 +178,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
@@ -201,7 +201,7 @@ const app = async () => {
     }
   };
 
-  // sendOnBackend(arrGames);
+  sendOnBackend(arrGames);
 
   console.log(444);
   writeToLog(`Футбол 444 ${Date()}\n\n`);
