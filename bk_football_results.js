@@ -64,9 +64,18 @@ const app = async () => {
   writeToLog(`Футбол 1,5 ${Date()}\n`);
 
   // Нажимаем ЗАВЕРШИВШИЕСЯ
-  const buttons = await page.$$eval("div.other-filters", (els) => {
-    const aaas = Array.from(els);
-    console.log('BUTTONS ', aaas);
+  const buttons = await page.$$eval(".other-filters span", (els) => {
+    const arrSpans = Array.from(els);
+    let buttonFinished = null;
+    arrSpans.forEach((item) => {
+      if(item.outerText == "Завершившиеся") {
+        if (!buttonFinished) buttonFinished = item.closest('button');
+      }
+    })
+    // console.log('buttonFinished', buttonFinished)
+    if(buttonFinished) buttonFinished.click();
+    // const aaas = Array.from(els).map(i => i.outerText = "Завершившиеся");
+    // console.log('BUTTONS ', buttonFinished);
     // labels.forEach((label) => {
     //   console.log("===", label.innerText);
     //   if (label.innerText.trim().toLowerCase() === "футбол") {
@@ -169,7 +178,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
