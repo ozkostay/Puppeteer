@@ -63,6 +63,19 @@ const app = async () => {
   console.log("=== 1.5");
   writeToLog(`Футбол 1,5 ${Date()}\n`);
 
+  // Нажимаем ЗАВЕРШИВШИЕСЯ
+  const buttons = await page.$$eval("div.other-filters", (els) => {
+    const aaas = Array.from(els);
+    console.log('BUTTONS ', aaas);
+    // labels.forEach((label) => {
+    //   console.log("===", label.innerText);
+    //   if (label.innerText.trim().toLowerCase() === "футбол") {
+    //     label.click();
+    //     return;
+    //   }
+    // });
+  });
+
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
     console.log("=== BUTTON", els);
@@ -179,7 +192,7 @@ const app = async () => {
     }
   };
 
-  sendOnBackend(arrGames);
+  // sendOnBackend(arrGames);
 
   console.log(444);
   writeToLog(`Футбол 444 ${Date()}\n\n`);
