@@ -31,17 +31,21 @@ const app = async () => {
   // const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   // console.log(url_del);
 
+  console.log('qqq-1');
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
 
+  console.log('qqq-2');
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
+  console.log('qqq-3');
   const page = await browser.newPage();
+  console.log('qqq-4');
   await page.goto(url, {
     waitUntil: "domcontentloaded",
   });
-
+  
   console.log(111);
   writeToLog(`Хоккей 111 ${Date()}\n`);
 
@@ -186,7 +190,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444, "Отправили на бекенд", arrGames);
+  console.log(444, "Отправили на бекенд");
   writeToLog(`Хоккей 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
