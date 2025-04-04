@@ -144,6 +144,10 @@ const app = async () => {
         const players = [];
         nameSpans.forEach((i) => players.push(i.innerText.trim()));
 
+        // Дата события
+        const dateDiv = row.querySelector(".date-wrapper");
+        const willDate = dateDiv?.innerText.trim();
+
         // ===================  find data-market-type
         const kefsAll = Array.from(row.querySelectorAll("[data-market-type]"));
         const kefsAllTemp = [];
@@ -152,7 +156,7 @@ const app = async () => {
         );
 
         if (players.length > 0) {
-          lineRows.push({ rowIndex, labels, players, kefsAllTemp });
+          lineRows.push({ rowIndex, labels, players, kefsAllTemp, date: willDate });
         }
       });
 
@@ -182,6 +186,7 @@ const app = async () => {
         timestamp: turnament.timestamp,
         turnament: turnament.turnamentName,
         surface: turnament.surface,
+        date: null,
         name1: null,
         name2: null,
         win1_odds: null,
@@ -201,6 +206,7 @@ const app = async () => {
 
       prepObj.name1 = tempSoursObj.players[0];
       prepObj.name2 = tempSoursObj.players[1];
+      prepObj.date = tempSoursObj.date;
       if (tempSoursObj.kefsAllTemp[0] !== "—") {
         prepObj.win1_odds = Number(tempSoursObj.kefsAllTemp[0]);
         prepObj.draw_odds = Number(tempSoursObj.kefsAllTemp[1]);
@@ -272,6 +278,7 @@ const app = async () => {
 
   const startToBackend = new Date();
 
+  console.log(bd);
   sendOnBackend(bd);
   
   console.log("Время выполнения ", new Date() - startToBackend);
