@@ -31,21 +31,21 @@ const app = async () => {
   // const url_del = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/tennis/results`;
   // console.log(url_del);
 
-  console.log('qqq-1');
+  console.log("qqq-1");
   const browser = await puppeteer.launch({
     headless: headless, // TRUE - не показывать браузер
   });
 
-  console.log('qqq-2');
+  console.log("qqq-2");
   const url = "https://www.marathonbet.ru/su/unionresults.htm";
 
-  console.log('qqq-3');
+  console.log("qqq-3");
   const page = await browser.newPage();
-  console.log('qqq-4');
+  console.log("qqq-4");
   await page.goto(url, {
     waitUntil: "domcontentloaded",
   });
-  
+
   console.log(111);
   writeToLog(`Хоккей 111 ${Date()}\n`);
 
@@ -128,11 +128,30 @@ const app = async () => {
     const arrChempionat = ["NHL", "КХЛ"];
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
-      const turnamentNameTemp = turnDiv.firstChild.textContent.trim();
-      const turnamentNameFromDOM = turnamentNameTemp.replace(
-        ". 1/8 финала",
-        ""
-      );
+      let turnamentNameTemp = turnDiv.firstChild.textContent.trim();
+      
+      // Удаляем хвосты в турнире
+      const arrTailForDel = [
+        ". 1/8 финала", 
+        ". 1/4 финала"
+      ];
+      
+      arrTailForDel.forEach((i) => {
+        if (turnamentNameTemp.includes(i)) {
+          turnamentNameTemp = turnamentNameTemp.replace(i, "");
+        }
+      })
+      
+      const turnamentNameFromDOM = turnamentNameTempж
+      // const turnamentNameFromDOM = turnamentNameTemp.replace(
+      //   ". 1/8 финала",
+      //   ""
+      // );
+      // const turnamentNameFromDOM_14 = turnamentNameTemp.replace(
+      //   ". 1/4 финала",
+      //   ""
+      // );
+      
       // console.log("===787===", turnamentNameFromDOM);
       let championatInList = false;
       arrChempionat.forEach((championat) => {
