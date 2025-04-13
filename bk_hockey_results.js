@@ -142,7 +142,7 @@ const app = async () => {
         }
       })
       
-      const turnamentNameFromDOM = turnamentNameTempж
+      const turnamentNameFromDOM = turnamentNameTemp;
       // const turnamentNameFromDOM = turnamentNameTemp.replace(
       //   ". 1/8 финала",
       //   ""
@@ -151,7 +151,7 @@ const app = async () => {
       //   ". 1/4 финала",
       //   ""
       // );
-      
+
       // console.log("===787===", turnamentNameFromDOM);
       let championatInList = false;
       arrChempionat.forEach((championat) => {
