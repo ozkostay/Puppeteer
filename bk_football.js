@@ -30,7 +30,7 @@ const app = async () => {
 
   // Press 'PageDown' until we load the page completely
   console.log(111);
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 2000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
