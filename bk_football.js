@@ -278,7 +278,12 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  console.log(bd);
+  // console.log(bd);
+  bd.forEach((i) => {
+    console.log('!!!- ', i.turnament, " - ", i.name1, " - ", i.name2, " - ", i.date);
+  })
+  
+
   sendOnBackend(bd);
   
   console.log("Время выполнения ", new Date() - startToBackend);
