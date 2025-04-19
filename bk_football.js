@@ -269,7 +269,7 @@ const app = async () => {
     };
     try {
       // const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
-      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars2025`;
+      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
       const res = await fetch(url, options);
       // console.log("res", await res.json());
     } catch (e) {

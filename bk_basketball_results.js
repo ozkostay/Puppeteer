@@ -134,6 +134,7 @@ const app = async () => {
     arrTurnamentDOM.forEach((turnDiv) => {
       let turnamentName = turnDiv.firstChild.textContent.trim();
       console.log("WWW", turnamentName);
+      turnamentName = turnamentName.replace(". Финал", "");
       turnamentName = turnamentName.replace(". 1/2 финала", "");
       turnamentName = turnamentName.replace(". 1/4 финала", "");
       turnamentName = turnamentName.replace(". 1/8 финала", "");
