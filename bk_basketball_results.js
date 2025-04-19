@@ -117,11 +117,6 @@ const app = async () => {
   console.log(3331, Date());
   writeToLog(`Баскетбол 3331 ${Date()}\n`);
 
-
-
-
-
-
   // Проверка нужных турниров
   const arrGames = await page.$$eval("div.result-category", async (el) => {
     const arrGamesReturn = [];
@@ -143,7 +138,6 @@ const app = async () => {
       turnamentName = turnamentName.replace(". 1/4 финала", "");
       turnamentName = turnamentName.replace(". 1/8 финала", "");
       turnamentName = turnamentName.replace(". Квалификационный раунд", "");
-      
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
@@ -203,7 +197,7 @@ const app = async () => {
 
   sendOnBackend(arrGames);
 
-  console.log(444, "Отправили на бекенд",arrGames);
+  console.log(444, "Отправили на бекенд", arrGames);
   writeToLog(`Баскетбол 444 ${Date()}\n\n`);
 
   // await browser.close(); //========================================================== = = = =
