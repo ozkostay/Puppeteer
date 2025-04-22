@@ -55,6 +55,9 @@ const app = async () => {
           if (
             spanText.toLowerCase().includes("финал") ||
             spanText.toLowerCase().includes("раунд") ||
+            spanText.toLowerCase().includes("групповой этап") ||
+            spanText.toLowerCase().includes("плей-офф") ||
+            spanText.toLowerCase().includes("микст") ||
             spanText.toLowerCase().includes("квалификация")
           ) {
           } else {
