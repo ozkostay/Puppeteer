@@ -133,7 +133,9 @@ const app = async () => {
       // Удаляем хвосты в турнире
       const arrTailForDel = [
         ". 1/8 финала", 
-        ". 1/4 финала"
+        ". 1/4 финала", 
+        ". 1/2 финала",
+        ". Финал"
       ];
       
       arrTailForDel.forEach((i) => {
