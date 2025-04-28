@@ -60,6 +60,7 @@ const app = async () => {
             spanText.toLowerCase().includes("финал") ||
             spanText.toLowerCase().includes("раунд") ||
             spanText.toLowerCase().includes("квалификация") ||
+            spanText.toLowerCase().includes("1/16 финала") ||
             spanText.toLowerCase().includes("1/8 финала") ||
             spanText.toLowerCase().includes("1/4 финала")
           ) {

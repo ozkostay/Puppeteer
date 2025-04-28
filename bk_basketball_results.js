@@ -135,9 +135,11 @@ const app = async () => {
       let turnamentName = turnDiv.firstChild.textContent.trim();
       console.log("WWW", turnamentName);
       turnamentName = turnamentName.replace(". Финал", "");
+      turnamentName = turnamentName.replace(". Полуфинал", "");
       turnamentName = turnamentName.replace(". 1/2 финала", "");
       turnamentName = turnamentName.replace(". 1/4 финала", "");
       turnamentName = turnamentName.replace(". 1/8 финала", "");
+      turnamentName = turnamentName.replace(". 1/16 финала", "");
       turnamentName = turnamentName.replace(". Квалификационный раунд", "");
 
       let championatInList = false;

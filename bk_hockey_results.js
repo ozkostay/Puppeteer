@@ -108,6 +108,7 @@ const app = async () => {
   console.log(333, Date());
   writeToLog(`Хоккей 333 ${Date()}\n`);
 
+  // PageDown пока не прочитаются все линии
   for (let i = 0; i < 1000; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
@@ -132,6 +133,7 @@ const app = async () => {
       
       // Удаляем хвосты в турнире
       const arrTailForDel = [
+        ". 1/16 финала", 
         ". 1/8 финала", 
         ". 1/4 финала", 
         ". 1/2 финала",
@@ -145,16 +147,7 @@ const app = async () => {
       })
       
       const turnamentNameFromDOM = turnamentNameTemp;
-      // const turnamentNameFromDOM = turnamentNameTemp.replace(
-      //   ". 1/8 финала",
-      //   ""
-      // );
-      // const turnamentNameFromDOM_14 = turnamentNameTemp.replace(
-      //   ". 1/4 финала",
-      //   ""
-      // );
 
-      // console.log("===787===", turnamentNameFromDOM);
       let championatInList = false;
       arrChempionat.forEach((championat) => {
         if (championat === turnamentNameFromDOM) championatInList = true;
@@ -163,11 +156,12 @@ const app = async () => {
       if (!championatInList) return;
 
       console.log("Проходим", turnamentNameFromDOM);
-      // Далее обрабатываем если чеммпионат из списка
+      // Далее обрабатываем если чемпионат из списка
       const gameRows = turnDiv.lastChild;
       const arrGame = Array.from(gameRows.querySelectorAll("div.result-event"));
       console.log("Tурнир", turnamentNameFromDOM);
 
+      // Заполняем результаты и дату
       arrGame.forEach((oneGame) => {
         const newObj = {
           turnament: turnamentNameFromDOM,
