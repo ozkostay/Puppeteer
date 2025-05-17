@@ -129,8 +129,25 @@ const app = async () => {
       "Футбол. США. MLS",
     ];
     const arrTurnamentDOM = Array.from(el);
+
     arrTurnamentDOM.forEach((turnDiv) => {
       const turnamentName = turnDiv.firstChild.textContent.trim();
+
+      //>========= Обрезаем ненужные хвосты
+      const arrTailForDel = [
+        ". 1/16 финала", 
+        ". 1/8 финала", 
+        ". 1/4 финала", 
+        ". 1/2 финала",
+        ". Финал"
+      ];
+      
+      arrTailForDel.forEach((i) => {
+        if (turnamentName.includes(i)) {
+          turnamentName = turnamentName.replace(i, "");
+        }
+      })
+      //<===========================
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
