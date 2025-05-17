@@ -77,12 +77,7 @@ const app = async () => {
       // Убераем последнюю точку если есть
       if (turnamentName.endsWith(".")) {
         turnamentName = turnamentName.slice(0, -1);
-        // console.log(stringБезТочки);
-      } else {
-        // console.log(string);
       }
-
-      console.log("===== ", turnamentName);
 
       // surface
       let surface = null;
@@ -250,7 +245,7 @@ const app = async () => {
     // console.log(i.turnament, i.name1);
   });
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
@@ -280,7 +275,7 @@ const app = async () => {
     console.log("!!!- ", i.turnament, " - ", i.name1, " - ", i.name2, " - ", i.date);
   });
 
-  // sendOnBackend(bd);
+  sendOnBackend(bd);
 
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
