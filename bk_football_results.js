@@ -127,6 +127,7 @@ const app = async () => {
       "Бразилия. Серия A",
       "Мексика. Примера дивизион",
       "Футбол. США. MLS",
+      "Турция. Суперлига",
     ];
     const arrTurnamentDOM = Array.from(el);
 
