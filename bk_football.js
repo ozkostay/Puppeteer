@@ -51,6 +51,7 @@ const app = async () => {
       const turnamentNameTemp = el.querySelectorAll("h2.category-label");
       const turnamentNameArr = [];
       turnamentNameTemp.forEach((item) => {
+        console.log("======================");
         const spans = item.querySelectorAll("span");
         spans.forEach((span) => {
           const spanText = span.innerText.trim();
@@ -62,20 +63,30 @@ const app = async () => {
             spanText.toLowerCase().includes("1/16 финала") ||
             spanText.toLowerCase().includes("1/8 финала") ||
             spanText.toLowerCase().includes("1/4 финала") ||
-            spanText.toLowerCase().includes("1/2 финала")
+            spanText.toLowerCase().includes("1/2 финала") ||
+            spanText.toLowerCase().includes("ответные матчи")
+            // 1/4 финала
           ) {
           } else {
             turnamentNameArr.push(spanText);
           }
         });
       });
-      const turnamentName = turnamentNameArr.join(" ");
+      let turnamentName = turnamentNameArr.join(" ");
+      
+      // Убераем последнюю точку если есть
+      if (turnamentName.endsWith(".")) {
+        turnamentName = turnamentName.slice(0, -1);
+        // console.log(stringБезТочки);
+      } else {
+        // console.log(string);
+      }
+
+      console.log("===== ", turnamentName);
 
       // surface
       let surface = null;
-      const surfaceContainer = el.querySelectorAll(
-        "div.tennis-court-surface-container"
-      );
+      const surfaceContainer = el.querySelectorAll("div.tennis-court-surface-container");
 
       surfaceContainer.forEach((item) => {
         const spans = item.querySelectorAll("span.btn__label");
@@ -111,7 +122,7 @@ const app = async () => {
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
-        // console.log('987 ', championat, ' ==8== ', turnamentName)
+        // console.log('+987++++  ', championat, ' ==8== ', turnamentName)
         if (championat === turnamentName) championatInList = true;
       });
       if (!championatInList) return;
@@ -120,9 +131,7 @@ const app = async () => {
 
       // ========== Labels
       const labels = [];
-      const labelTableSource = Array.from(
-        el.querySelectorAll(".coupone-labels")
-      );
+      const labelTableSource = Array.from(el.querySelectorAll(".coupone-labels"));
 
       labelTableSource.forEach((i) => {
         // console.log("333", i);
@@ -143,9 +152,7 @@ const app = async () => {
 
       rows.forEach((row, rowIndex) => {
         // =================== find players in row
-        const nameSpans = Array.from(
-          row.querySelectorAll("span[data-member-link]")
-        );
+        const nameSpans = Array.from(row.querySelectorAll("span[data-member-link]"));
         const players = [];
         nameSpans.forEach((i) => players.push(i.innerText.trim()));
 
@@ -156,9 +163,7 @@ const app = async () => {
         // ===================  find data-market-type
         const kefsAll = Array.from(row.querySelectorAll("[data-market-type]"));
         const kefsAllTemp = [];
-        kefsAll.forEach((i) =>
-          kefsAllTemp.push(`${i.innerText.trim().replace(/\n/g, "=&=")}`)
-        );
+        kefsAll.forEach((i) => kefsAllTemp.push(`${i.innerText.trim().replace(/\n/g, "=&=")}`));
 
         if (players.length > 0) {
           lineRows.push({ rowIndex, labels, players, kefsAllTemp, date: willDate });
@@ -221,34 +226,20 @@ const app = async () => {
         prepObj.double_x2_odds = Number(tempSoursObj.kefsAllTemp[5]);
       }
       if (tempSoursObj.kefsAllTemp[6].split("=&=")[0] !== "—") {
-        prepObj.handicap1_value = Number(
-          tempSoursObj.kefsAllTemp[6].split("=&=")[0].replace(/\(|\)/g, "")
-        );
+        prepObj.handicap1_value = Number(tempSoursObj.kefsAllTemp[6].split("=&=")[0].replace(/\(|\)/g, ""));
 
-        prepObj.handicap1_odds = Number(
-          tempSoursObj.kefsAllTemp[6].split("=&=")[1]
-        );
+        prepObj.handicap1_odds = Number(tempSoursObj.kefsAllTemp[6].split("=&=")[1]);
 
-        prepObj.handicap2_value = Number(
-          tempSoursObj.kefsAllTemp[7].split("=&=")[0].replace(/\(|\)/g, "")
-        );
+        prepObj.handicap2_value = Number(tempSoursObj.kefsAllTemp[7].split("=&=")[0].replace(/\(|\)/g, ""));
 
-        prepObj.handicap2_odds = Number(
-          tempSoursObj.kefsAllTemp[7].split("=&=")[1]
-        );
+        prepObj.handicap2_odds = Number(tempSoursObj.kefsAllTemp[7].split("=&=")[1]);
       }
       if (tempSoursObj.kefsAllTemp[8].split("=&=")[0] !== "—") {
-        prepObj.total_value = Number(
-          tempSoursObj.kefsAllTemp[8].split("=&=")[0].replace(/\(|\)/g, "")
-        );
+        prepObj.total_value = Number(tempSoursObj.kefsAllTemp[8].split("=&=")[0].replace(/\(|\)/g, ""));
 
-        prepObj.total_under_odds = Number(
-          tempSoursObj.kefsAllTemp[8].split("=&=")[1]
-        );
+        prepObj.total_under_odds = Number(tempSoursObj.kefsAllTemp[8].split("=&=")[1]);
 
-        prepObj.total_over_odds = Number(
-          tempSoursObj.kefsAllTemp[9].split("=&=")[1]
-        );
+        prepObj.total_over_odds = Number(tempSoursObj.kefsAllTemp[9].split("=&=")[1]);
       }
       bd.push(prepObj);
     });
@@ -286,15 +277,13 @@ const app = async () => {
 
   // console.log(bd);
   bd.forEach((i) => {
-    console.log('!!!- ', i.turnament, " - ", i.name1, " - ", i.name2, " - ", i.date);
-  })
-  
+    console.log("!!!- ", i.turnament, " - ", i.name1, " - ", i.name2, " - ", i.date);
+  });
 
   // sendOnBackend(bd);
-  
+
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
-
 }; //end =======
 
 app();
