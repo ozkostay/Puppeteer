@@ -56,8 +56,13 @@ const app = async () => {
           const spanText = span.innerText.trim();
           if (
             spanText.toLowerCase().includes("финал") ||
+            spanText.toLowerCase().includes("полуфинал") ||
             spanText.toLowerCase().includes("раунд") ||
-            spanText.toLowerCase().includes("квалификация")
+            spanText.toLowerCase().includes("квалификация") ||
+            spanText.toLowerCase().includes("1/16 финала") ||
+            spanText.toLowerCase().includes("1/8 финала") ||
+            spanText.toLowerCase().includes("1/4 финала") ||
+            spanText.toLowerCase().includes("1/2 финала")
           ) {
           } else {
             turnamentNameArr.push(spanText);
@@ -254,7 +259,7 @@ const app = async () => {
     // console.log(i.turnament, i.name1);
   });
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
@@ -285,7 +290,7 @@ const app = async () => {
   })
   
 
-  sendOnBackend(bd);
+  // sendOnBackend(bd);
   
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
