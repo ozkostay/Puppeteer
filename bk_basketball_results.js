@@ -141,6 +141,8 @@ const app = async () => {
       turnamentName = turnamentName.replace(". 1/8 финала", "");
       turnamentName = turnamentName.replace(". 1/16 финала", "");
       turnamentName = turnamentName.replace(". Квалификационный раунд", "");
+      turnamentName = turnamentName.replace(". Матч за 3-е место", "");
+      
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
@@ -175,7 +177,7 @@ const app = async () => {
 
   // console.log("", rowsResults);
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (resultLines) => {
@@ -198,7 +200,7 @@ const app = async () => {
     }
   };
 
-  sendOnBackend(arrGames);
+  // sendOnBackend(arrGames);
 
   console.log(444, "Отправили на бекенд", arrGames);
   writeToLog(`Баскетбол 444 ${Date()}\n\n`);
