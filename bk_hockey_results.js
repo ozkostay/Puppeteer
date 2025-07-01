@@ -73,6 +73,17 @@ const app = async () => {
   });
   console.log("=== 1.5");
 
+  // Ждем 3 секунды ============================================
+  for (let i = 0; i < 3; i += 1) {
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 1000);
+      delTimeout = idTimeOut;
+    });
+    // page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
+  }
+
   // Нажимаем ЗАВЕРШИВШИЕСЯ
   const buttons = await page.$$eval(".other-filters span", (els) => {
     const arrSpans = Array.from(els);
@@ -84,6 +95,17 @@ const app = async () => {
     });
     if (buttonFinished) buttonFinished.click();
   });
+
+  // Ждем 3 секунды ============================================
+  for (let i = 0; i < 3; i += 1) {
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 1000);
+      delTimeout = idTimeOut;
+    });
+    // page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
+  }
 
   // Нажимаем выбор временного диапазона
   const buttonDate = await page.$$eval("button.date-picker-btn", (els) => {
@@ -105,17 +127,32 @@ const app = async () => {
     });
     return "последние 7 дней";
   });
+
+  // Ждем 3 секунды ============================================
+  for (let i = 0; i < 3; i += 1) {
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 1000);
+      delTimeout = idTimeOut;
+    });
+    // page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
+  }
+
   console.log(333, Date());
   writeToLog(`Хоккей 333 ${Date()}\n`);
 
   // PageDown пока не прочитаются все линии
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 500; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
-      const idTimeOut = setTimeout(() => resolve(), 30);
+      const idTimeOut = setTimeout(() => resolve(), 50);
       delTimeout = idTimeOut;
     });
     page.keyboard.press("PageDown");
+    if (i % 10 === 0) {
+      page.keyboard.press("PageUp");
+    }
     clearTimeout(delTimeout);
   }
 
@@ -130,22 +167,16 @@ const app = async () => {
     const arrTurnamentDOM = Array.from(el);
     arrTurnamentDOM.forEach((turnDiv) => {
       let turnamentNameTemp = turnDiv.firstChild.textContent.trim();
-      
+
       // Удаляем хвосты в турнире
-      const arrTailForDel = [
-        ". 1/16 финала", 
-        ". 1/8 финала", 
-        ". 1/4 финала", 
-        ". 1/2 финала",
-        ". Финал"
-      ];
-      
+      const arrTailForDel = [". 1/16 финала", ". 1/8 финала", ". 1/4 финала", ". 1/2 финала", ". Финал"];
+
       arrTailForDel.forEach((i) => {
         if (turnamentNameTemp.includes(i)) {
           turnamentNameTemp = turnamentNameTemp.replace(i, "");
         }
-      })
-      
+      });
+
       const turnamentNameFromDOM = turnamentNameTemp;
 
       let championatInList = false;
@@ -165,10 +196,7 @@ const app = async () => {
       arrGame.forEach((oneGame) => {
         const newObj = {
           turnament: turnamentNameFromDOM,
-          players: oneGame
-            .querySelector("td.event-name-container")
-            .innerText?.trim()
-            .replace("@", "-"),
+          players: oneGame.querySelector("td.event-name-container").innerText?.trim().replace("@", "-"),
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };
