@@ -282,7 +282,7 @@ const app = async () => {
       // const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
       const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars2025`;
       const res = await fetch(url, options);
-      // console.log("res", await res.json());
+      console.log("res", await res.json());
     } catch (e) {
       console.log("ERROR UPLOAD", e);
     }
