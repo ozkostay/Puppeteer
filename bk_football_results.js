@@ -169,18 +169,28 @@ const app = async () => {
       "Аргентина. Примера дивизион",
       "Бразилия. Серия A",
       "Мексика. Примера дивизион",
-      "Футбол. США. MLS",
+      "США. MLS",
       "Турция. Суперлига",
+      "Египет. Премьер-лига",
+      "Катар. Старз лига",
+      "Эквадор. Серия A",
+      "Чили. Примера дивизион",
     ];
     const arrTurnamentDOM = Array.from(el);
-    console.log('Длина массива arrTurnamentDOM', arrTurnamentDOM);
+    console.log("Длина массива arrTurnamentDOM", arrTurnamentDOM);
 
     arrTurnamentDOM.forEach((turnDiv) => {
       let turnamentName = turnDiv.firstChild.textContent.trim();
       console.log(turnamentName);
 
       //>========= Обрезаем ненужные хвосты
-      const arrTailForDel = [". 1/16 финала", ". 1/8 финала", ". 1/4 финала", ". 1/2 финала", ". Финал"];
+      const arrTailForDel = [
+        ". 1/16 финала",
+        ". 1/8 финала",
+        ". 1/4 финала",
+        ". 1/2 финала",
+        ". Финал",
+      ];
 
       arrTailForDel.forEach((i) => {
         if (turnamentName.includes(i)) {
@@ -208,7 +218,9 @@ const app = async () => {
       arrGame.forEach((oneGame) => {
         const newObj = {
           turnament: turnamentName,
-          players: oneGame.querySelector("td.event-name-container").innerText?.trim(),
+          players: oneGame
+            .querySelector("td.event-name-container")
+            .innerText?.trim(),
           result: oneGame.querySelector("td.value")?.innerText.trim(),
           dataResult: oneGame.querySelector("td.date")?.innerText.trim(),
         };

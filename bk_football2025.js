@@ -100,8 +100,12 @@ const app = async () => {
         "Аргентина. Примера дивизион",
         "Бразилия. Серия A",
         "Мексика. Примера дивизион",
-        "Футбол. США. MLS",
+        "США. MLS",
         "Турция. Суперлига",
+        "Египет. Премьер-лига",
+        "Катар. Старз лига",
+        "Эквадор. Серия A",
+        "Чили. Примера дивизион",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
@@ -157,7 +161,13 @@ const app = async () => {
         );
 
         if (players.length > 0) {
-          lineRows.push({ rowIndex, labels, players, kefsAllTemp, date: willDate });
+          lineRows.push({
+            rowIndex,
+            labels,
+            players,
+            kefsAllTemp,
+            date: willDate,
+          });
         }
       });
 
@@ -282,15 +292,22 @@ const app = async () => {
 
   // console.log(bd);
   bd.forEach((i) => {
-    console.log('!!!- ', i.turnament, " - ", i.name1, " - ", i.name2, " - ", i.date);
-  })
-  
+    console.log(
+      "!!!- ",
+      i.turnament,
+      " - ",
+      i.name1,
+      " - ",
+      i.name2,
+      " - ",
+      i.date
+    );
+  });
 
   sendOnBackend(bd);
-  
+
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
-
 }; //end =======
 
 app();
