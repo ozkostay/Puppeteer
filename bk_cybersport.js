@@ -136,15 +136,18 @@ const app = async () => {
         } else {
           console.log(children.tagName)
           championShipTime = children.querySelector("span.line-event__time")?.innerText;
+          let team1 = null;
+          let team2 = null;
           if (championShipTime) {
             // console.log("111 ", championShipName, championShipDate, championShipTime);
             const championShipTeams = children.querySelector("span.line-event__name-teams");
             if (championShipTeams) {
-              const team1 = championShipTeams.children[0]?.innerText;
-              const team2 = championShipTeams.children[1]?.innerText;
+              team1 = championShipTeams.children[0]?.innerText;
+              team2 = championShipTeams.children[1]?.innerText;
               console.log("======== team1", championShipName, championShipDate, championShipTime, team1);
               console.log("======== team2", championShipName, championShipDate, championShipTime, team2);
             }
+            
 
             // console.log("======== team1", championShipTeams[0]?.innerText);
             // console.log("======== team2", championShipTeams[1]?.innerText);
