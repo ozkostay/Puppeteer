@@ -19,7 +19,7 @@ const app = async () => {
     headless: headless, // TRUE - не показывать браузер
   });
 
-  const url = "https://betcity.ru/ru/line/cybersport?ts=24";
+  const url = "https://betcity.ru/ru/line/cybersport?ts=72";
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -100,7 +100,7 @@ const app = async () => {
   });
 
   console.log(222, "Опять ждем");
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 200; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
@@ -113,127 +113,59 @@ const app = async () => {
   // work with data
   const data = await page.$$eval("div.line__champ", (els) => {
     const retData = [];
-    els.forEach((el) => {
-      console.log("el === ", el);
-      //     const turnamentId = el.id;
-      //     // ==== Make name of tunament
-      //     const turnamentNameTemp = el.querySelectorAll("h2.category-label");
-      //     const turnamentNameArr = [];
-      //     turnamentNameTemp.forEach((item) => {
-      //       const spans = item.querySelectorAll("span");
-      //       console.log("WWW==============================");
-      //       spans.forEach((span) => {
-      //         const spanText = span.innerText.trim();
-      //         console.log("WWW", spanText);
-      //         if (
-      //           spanText.toLowerCase().includes("финал") ||
-      //           spanText.toLowerCase().includes("раунд") ||
-      //           spanText.toLowerCase().includes("квалификация") ||
-      //           spanText.toLowerCase().includes("1/16 финала") ||
-      //           spanText.toLowerCase().includes("1/8 финала") ||
-      //           spanText.toLowerCase().includes("1/4 финала") ||
-      //           spanText.toLowerCase().includes("1/2 финала") ||
-      //           spanText.toLowerCase().includes("полуфинал") ||
-      //           spanText.toLowerCase().includes("финал") ||
-      //           spanText.toLowerCase().includes("матч за 3-е место")
-      //         ) {
-      //         } else {
-      //           turnamentNameArr.push(spanText);
-      //         }
-      //       });
-      //     });
-      //     let turnamentName = turnamentNameArr.join(" ");
-      //     // Убераем точку если она есть в конце
-      //     turnamentName =
-      //       turnamentName.at(-1) === "."
-      //         ? turnamentName.slice(0, turnamentName.length - 1)
-      //         : turnamentName;
-      //     // surface
-      //     let surface = null;
-      //     const surfaceContainer = el.querySelectorAll(
-      //       "div.tennis-court-surface-container"
-      //     );
-      //     surfaceContainer.forEach((item) => {
-      //       const spans = item.querySelectorAll("span.btn__label");
-      //       if (spans.length > 0) {
-      //         surface = spans[0].innerText.trim();
-      //       }
-      //     });
-      //     //Исключаем по
-      //     const arrWords = ["Итоги", "Женщины"];
-      //     const check = arrWords.reduce((acc, cur) => {
-      //       const plus = turnamentName.includes(cur) ? 1 : 0;
-      //       return acc + plus;
-      //     }, 0);
-      //     if (check > 0) return;
-      //     // Исключаем если не в списке
-      //     const arrChempionat = [
-      //       "NBA",
-      //       "Лига ВТБ. Мужчины",
-      //       "WNBA",
-      //       "Германия. Мужчины. Бундеслига",
-      //       "Испания. Мужчины. Лига ACB",
-      //       "Греция. Мужчины. GBL",
-      //       "Австралия. Мужчины. NBL",
-      //     ];
-      //     // const turnamentFullName = turnDiv.firstChild.textContent.trim();
-      //     let championatInList = false;
-      //     arrChempionat.forEach((championat) => {
-      //       // console.log('987 ', championat, ' ==8== ', turnamentName)
-      //       if (championat === turnamentName) championatInList = true;
-      //     });
-      //     if (!championatInList) return;
-      //     console.log("= Проходим ===== ", turnamentName, surface);
-      //     // ========== Labels
-      //     const labels = [];
-      //     const labelTableSource = Array.from(
-      //       el.querySelectorAll(".coupone-labels")
-      //     );
-      //     labelTableSource.forEach((i) => {
-      //       // console.log("333", i);
-      //       const ths = i.querySelectorAll("th");
-      //       ths.forEach((th) => {
-      //         // console.log('======= 444' , th.textContent.trim().slice(' ')[0]);
-      //         // console.log(
-      //         //   "======= 444=" + th.textContent.trim().split(" ")[0] + "="
-      //         // );
-      //         labels.push(th.textContent.trim().split(" ")[0].replace(/\n/g, ""));
-      //       });
-      //     });
-      //     // find line_rows
-      //     const lineRows = [];
-      //     const rows = Array.from(el.querySelectorAll("table.coupon-row-item"));
-      //     const rowsInTurnament = rows.length;
-      //     rows.forEach((row, rowIndex) => {
-      //       // =================== find players in row
-      //       const nameSpans = Array.from(
-      //         row.querySelectorAll("span[data-member-link]")
-      //       );
-      //       const players = [];
-      //       nameSpans.forEach((i) => players.push(i.innerText.trim()));
-      //       // Ищем дату события
-      //       const dateDiv = row.querySelector(".date-wrapper");
-      //       const willDate = dateDiv?.innerText.trim();
-      //       // ===================  find data-market-type
-      //       const kefsAll = Array.from(row.querySelectorAll("[data-market-type]"));
-      //       const kefsAllTemp = [];
-      //       kefsAll.forEach((i) =>
-      //         kefsAllTemp.push(`${i.innerText.trim().replace(/\n/g, "=&=")}`)
-      //       );
-      //       if (players.length > 0) {
-      //         lineRows.push({ rowIndex, labels, players, kefsAllTemp, date: willDate });
-      //       }
-      //     });
-      //     // Add data in turnament
-      //     retData.push({
-      //       turnamentId,
-      //       turnamentName,
-      //       surface,
-      //       lineRows,
-      //       rowsInTurnament,
-      //       timestamp: Date(),
-      //     });
-      // });
+    els.forEach((championship) => {
+      console.log("el ========================================= ", championship);
+      const title = championship.querySelector("a.line-champ__header-link");
+      const championShipName = title.innerText; //===============================
+      let championShipDate = null;
+      let championShipTime = null;
+      // let championShipTeams = null;
+
+      // console.log('555', championShipName)
+      const childrens = Array.from(championship.children);
+      // console.log('667', childrens)
+      childrens.forEach((children) => {
+        // console.log("TAG", children.tagName, "class", children.classList);
+        if (children.tagName === "DIV") {
+          if (children.classList.contains("line-champ__date")) {
+            // console.log('=== ДАТА', children.innerText);
+            championShipDate = children.innerText;
+            championShipTime = null
+            // championShipTeams = null
+          }
+        } else {
+          console.log(children.tagName)
+          championShipTime = children.querySelector("span.line-event__time")?.innerText;
+          if (championShipTime) {
+            // console.log("111 ", championShipName, championShipDate, championShipTime);
+            const championShipTeams = children.querySelector("span.line-event__name-teams");
+            if (championShipTeams) {
+              const team1 = championShipTeams.children[0]?.innerText;
+              const team2 = championShipTeams.children[1]?.innerText;
+              console.log("======== team1", championShipName, championShipDate, championShipTime, team1);
+              console.log("======== team2", championShipName, championShipDate, championShipTime, team2);
+            }
+
+            // console.log("======== team1", championShipTeams[0]?.innerText);
+            // console.log("======== team2", championShipTeams[1]?.innerText);
+          }
+
+
+
+
+
+
+
+
+
+        }
+
+        
+      }) 
+      
+      // Выбераем линии чемпионата
+      // const lines = championship.querySelectorAll()
+
       return retData;
     });
     // //=================== object preparation
