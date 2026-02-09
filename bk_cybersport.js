@@ -151,7 +151,7 @@ const app = async () => {
 
           // Далее выбераем коэффициенты для каждой линии
           // const kefsContainer = children.querySelector("app-line-main-dops-container");
-            const kefsContainer = children.querySelector("div.line-event__main-bets");
+          const kefsContainer = children.querySelector("div.line-event__main-bets");
           console.log("=== kefsContainer", kefsContainer);
 
           const betsChildrens = Array.from(kefsContainer.children);
@@ -159,11 +159,8 @@ const app = async () => {
           betsChildrens.forEach((betChildren) => {
             console.log("=== betChildren", betChildren.innerText);
           });
-          // const kefsTags = kefsContainer.children.querySelectorAll("line-event__main-bets-button");  
+          // const kefsTags = kefsContainer.children.querySelectorAll("line-event__main-bets-button");
           // console.log("=== kefsTags", kefsTags);
-
-
-          
         }
       });
 
