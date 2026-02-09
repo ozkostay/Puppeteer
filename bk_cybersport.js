@@ -19,7 +19,7 @@ const app = async () => {
     headless: headless, // TRUE - не показывать браузер
   });
 
-  const url = "https://betcity.ru/ru/line/cybersport?ts=72";
+  const url = "https://betcity.ru/ru/line/cybersport?ts=48";
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -111,61 +111,62 @@ const app = async () => {
   }
 
   // work with data
-  const data = await page.$$eval("div.line__champ", (els) => {
+  const dataAllChamps = await page.$$eval("div.line__champ", (els) => {
     const retData = [];
     els.forEach((championship) => {
       console.log("el ========================================= ", championship);
       const title = championship.querySelector("a.line-champ__header-link");
       const championShipName = title.innerText; //===============================
-      let championShipDate = null;
-      let championShipTime = null;
-      // let championShipTeams = null;
 
-      // console.log('555', championShipName)
+      let championShipDate = null;
+      let championShipLineTime = null;
+
       const childrens = Array.from(championship.children);
       // console.log('667', childrens)
       childrens.forEach((children) => {
         // console.log("TAG", children.tagName, "class", children.classList);
-        if (children.tagName === "DIV") {
-          if (children.classList.contains("line-champ__date")) {
-            // console.log('=== ДАТА', children.innerText);
-            championShipDate = children.innerText;
-            championShipTime = null
-            // championShipTeams = null
-          }
-        } else {
-          console.log(children.tagName)
-          championShipTime = children.querySelector("span.line-event__time")?.innerText;
-          let team1 = null;
-          let team2 = null;
-          if (championShipTime) {
-            // console.log("111 ", championShipName, championShipDate, championShipTime);
-            const championShipTeams = children.querySelector("span.line-event__name-teams");
-            if (championShipTeams) {
-              team1 = championShipTeams.children[0]?.innerText;
-              team2 = championShipTeams.children[1]?.innerText;
-              console.log("======== team1", championShipName, championShipDate, championShipTime, team1);
-              console.log("======== team2", championShipName, championShipDate, championShipTime, team2);
-            }
-            
-
-            // console.log("======== team1", championShipTeams[0]?.innerText);
-            // console.log("======== team2", championShipTeams[1]?.innerText);
-          }
-
-
-
-
-
-
-
-
-
+        if (children.tagName === "DIV" && children.classList.contains("line-champ__date")) {
+          championShipDate = children.innerText;
+          championShipLineTime = null;
         }
 
-        
-      }) 
-      
+        if (children.tagName === "APP-LINE-EVENT-UNIT") {
+          console.log("children.tagName", children.tagName);
+          championShipLineTime = children.querySelector("span.line-event__time")?.innerText;
+
+          let team1 = null;
+          let team2 = null;
+
+          const championShipTeams = children.querySelector("span.line-event__name-teams");
+
+          if (!championShipTeams) {
+            console.log("Проблема с именами команд");
+            return;
+          }
+
+          team1 = championShipTeams.children[0]?.innerText;
+          team2 = championShipTeams.children[1]?.innerText;
+          console.log("======== team1", championShipName, "222", championShipDate, "333", championShipLineTime, "NAMEteam1", team1);
+          console.log("======== team2", championShipName, "222", championShipDate, "333", championShipLineTime, "NAMEteam2", team2);
+
+          // Далее выбераем коэффициенты для каждой линии
+          // const kefsContainer = children.querySelector("app-line-main-dops-container");
+            const kefsContainer = children.querySelector("div.line-event__main-bets");
+          console.log("=== kefsContainer", kefsContainer);
+
+          const betsChildrens = Array.from(kefsContainer.children);
+          console.log("=== betsChildrens", betsChildrens);
+          betsChildrens.forEach((betChildren) => {
+            console.log("=== betChildren", betChildren.innerText);
+          });
+          // const kefsTags = kefsContainer.children.querySelectorAll("line-event__main-bets-button");  
+          // console.log("=== kefsTags", kefsTags);
+
+
+          
+        }
+      });
+
       // Выбераем линии чемпионата
       // const lines = championship.querySelectorAll()
 
