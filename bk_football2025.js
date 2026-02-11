@@ -265,7 +265,7 @@ const app = async () => {
     // console.log(i.turnament, i.name1);
   });
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
