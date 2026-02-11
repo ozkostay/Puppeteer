@@ -92,26 +92,26 @@ const app = async () => {
         "Россия. Премьер-лига",
         "Англия. Премьер-лига",
         "Германия. Бундеслига",
-        "Испания. Примера дивизион",
+        "Испания. Ла Лига ",
         "Италия. Серия A",
         "Франция. Лига 1",
         "Португалия. Примейра-лига",
         "Англия. Чемпионшип",
-        "Аргентина. Примера дивизион",
+        "Аргентина. Примера Дивизион",
         "Бразилия. Серия A",
-        "Мексика. Примера дивизион",
+        "Мексика. Примера Дивизион",
         "США. MLS",
         "Турция. Суперлига",
         "Египет. Премьер-лига",
         "Катар. Старз лига",
         "Эквадор. Серия A",
-        "Чили. Примера дивизион",
+        "Чили. Примера Дивизион",
       ];
       // const turnamentFullName = turnDiv.firstChild.textContent.trim();
 
       let championatInList = false;
       arrChempionat.forEach((championat) => {
-        // console.log('987 ', championat, ' ==8== ', turnamentName)
+        console.log('99999 ', championat, ' ==8== ', turnamentName)
         if (championat === turnamentName) championatInList = true;
       });
       if (!championatInList) return;
@@ -190,7 +190,7 @@ const app = async () => {
     turnament.lineRows.forEach((lineRow) => {
       const tempSoursObj = lineRow;
       if (idx === 0) {
-        console.log("=== lineRow", lineRow, "length", data.length);
+        // console.log("=== lineRow", lineRow, "length", data.length);
       }
 
       const prepObj = {
@@ -265,7 +265,7 @@ const app = async () => {
     // console.log(i.turnament, i.name1);
   });
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {

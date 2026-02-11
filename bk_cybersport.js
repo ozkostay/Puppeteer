@@ -10,7 +10,7 @@ const app = async () => {
   console.log("process.env.SPORT_URL", process.env.SPORT_URL);
   console.log("process.env.SPORT_PORT", process.env.SPORT_PORT);
 
-  const sport = "basketball";
+  const sport = "cybersport";
   const headless = process.env.HEADLESS === "false" ? false : true;
 
   console.log("headless", headless);
@@ -29,35 +29,6 @@ const app = async () => {
   // Press 'PageDown' until we load the page completely
   console.log(111);
 
-  // (function () {
-  //   // Функция для поиска и клика
-  //   const clickAllEvents = () => {
-  //     // Ищем span, который содержит именно этот текст
-
-  //     const spans = Array.from(document.querySelectorAll("span"));
-  //     const targetSpan = spans.find((el) => el.textContent.trim() === "Все события");
-
-  //     if (targetSpan) {
-  //       // Находим ближайший родительский контейнер, который обычно отвечает за клик
-  //       const parentContainer = targetSpan.closest(".champs__champ");
-
-  //       if (parentContainer) {
-  //         parentContainer.click();
-  //         console.log('✅ Клик по "Все события" выполнен');
-  //       } else {
-  //         // Если контейнер не найден, кликаем по самому тексту
-  //         targetSpan.click();
-  //         console.log("⚠️ Контейнер не найден, кликнули по тексту");
-  //       }
-  //     } else {
-  //       console.log('❌ Элемент "Все события" пока не найден на странице');
-  //     }
-  //   };
-
-  //   // Запускаем поиск
-  //   clickAllEvents();
-  // })();
-
   for (let i = 0; i < 100; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
@@ -71,14 +42,10 @@ const app = async () => {
   // Нажимаем чекбокс Все события
   const checkEvents = await page.$$eval("span", (els) => {
     const div_checkboxs = Array.from(els);
-    // console.log("div_checkboxs", div_checkboxs);
     div_checkboxs.forEach((div_checkbox) => {
-      //const label = div_checkbox.querySelector("label");
       console.log("===", div_checkbox.innerText);
       if (div_checkbox.innerText.trim().toLowerCase() === "Все события".toLowerCase()) {
-        // console.log("=== CLICK", div_checkbox);
         div_checkbox.click();
-
         return;
       }
     });
@@ -88,12 +55,9 @@ const app = async () => {
     const buttonShow = Array.from(els);
     console.log("button", buttonShow);
     buttonShow.forEach((button) => {
-      //const label = div_checkbox.querySelector("label");
       console.log("===", button.innerText);
       if (button.innerText.trim().toLowerCase() === "Показать".toLowerCase()) {
-        // console.log("=== BUTTON click button");
         button.click();
-
         return;
       }
     });
@@ -114,17 +78,19 @@ const app = async () => {
   const dataAllChamps = await page.$$eval("div.line__champ", (els) => {
     const retData = [];
     els.forEach((championship) => {
+      console.log(" ");
       console.log("el ========================================= ", championship);
       const title = championship.querySelector("a.line-champ__header-link");
-      const championShipName = title.innerText; //===============================
+      const championShipName = title.innerText.trim();
 
+      let championShipSport = championShipName.split(". ")[1].trim();
+      let championShipTurnament = championShipName.split(". ")[2]?.split("(")[0].trim();
       let championShipDate = null;
       let championShipLineTime = null;
 
       const childrens = Array.from(championship.children);
-      // console.log('667', childrens)
+      
       childrens.forEach((children) => {
-        // console.log("TAG", children.tagName, "class", children.classList);
         if (children.tagName === "DIV" && children.classList.contains("line-champ__date")) {
           championShipDate = children.innerText;
           championShipLineTime = null;
@@ -146,90 +112,37 @@ const app = async () => {
 
           team1 = championShipTeams.children[0]?.innerText;
           team2 = championShipTeams.children[1]?.innerText;
-          console.log("======== team1", championShipName, "222", championShipDate, "333", championShipLineTime, "NAMEteam1", team1);
-          console.log("======== team2", championShipName, "222", championShipDate, "333", championShipLineTime, "NAMEteam2", team2);
-
+          
           // Далее выбераем коэффициенты для каждой линии
-          // const kefsContainer = children.querySelector("app-line-main-dops-container");
           const kefsContainer = children.querySelector("div.line-event__main-bets");
-          console.log("=== kefsContainer", kefsContainer);
-
           const betsChildrens = Array.from(kefsContainer.children);
-          console.log("=== betsChildrens", betsChildrens);
-          betsChildrens.forEach((betChildren) => {
-            console.log("=== betChildren", betChildren.innerText);
-          });
-          // const kefsTags = kefsContainer.children.querySelectorAll("line-event__main-bets-button");
-          // console.log("=== kefsTags", kefsTags);
+          
+          const lineObj = {
+            timestamp: Date(),
+            sport: championShipSport,
+            turnament: championShipTurnament,
+            surface: null,
+            date: `${championShipDate} ${championShipLineTime}`,
+            name1: team1,
+            name2: team2,
+            win1_odds: Number(betsChildrens[0]?.innerText || 1),
+            win2_odds: Number(betsChildrens[2]?.innerText || 1),
+            handicap1_value: Number(betsChildrens[3]?.innerText || 0),
+            handicap1_odds: Number(betsChildrens[4]?.innerText || 1),
+            handicap2_value: Number(betsChildrens[5]?.innerText || 0),
+            handicap2_odds: Number(betsChildrens[6]?.innerText || 1),
+            total_value: Number(betsChildrens[7]?.innerText || 0),
+            total_under_odds: Number(betsChildrens[8]?.innerText || 1),
+            total_over_odds: Number(betsChildrens[9]?.innerText || 1),
+          };
+          console.log("999 ====== lineObj", lineObj);
+          retData.push(lineObj);
         }
       });
-
-      // Выбераем линии чемпионата
-      // const lines = championship.querySelectorAll()
-
-      return retData;
     });
-    // //=================== object preparation
-    // data.forEach((turnament, idx) => {
-    //   turnament.lineRows.forEach((lineRow) => {
-    //     const tempSoursObj = lineRow;
-    //     if (idx === 0) {
-    //       console.log("=== lineRow", lineRow, "length", data.length);
-    //     }
-    //     const prepObj = {
-    //       timestamp: turnament.timestamp,
-    //       turnament: turnament.turnamentName,
-    //       surface: turnament.surface,
-    //       date: null,
-    //       name1: null,
-    //       name2: null,
-    //       win1_odds: null,
-    //       win2_odds: null,
-    //       handicap1_value: null,
-    //       handicap1_odds: null,
-    //       handicap2_value: null,
-    //       handicap2_odds: null,
-    //       total_value: null,
-    //       total_under_odds: null,
-    //       total_over_odds: null,
-    //     };
-    //     prepObj.name1 = tempSoursObj.players[0];
-    //     prepObj.name2 = tempSoursObj.players[1];
-    //     prepObj.date = tempSoursObj.date;
-    //     if (tempSoursObj.kefsAllTemp[0] !== "—") {
-    //       prepObj.win1_odds = Number(tempSoursObj.kefsAllTemp[0]);
-    //       prepObj.win2_odds = Number(tempSoursObj.kefsAllTemp[1]);
-    //     }
-    //     console.log("sss1", prepObj.win1_odds);
-    //     console.log("sss2", prepObj.win2_odds);
-    //     console.log("sss3", tempSoursObj.kefsAllTemp.length);
-    //     if (tempSoursObj.kefsAllTemp[2].split("=&=")[0] !== "—") {
-    //       prepObj.handicap1_value = Number(
-    //         tempSoursObj.kefsAllTemp[2].split("=&=")[0].replace(/\(|\)/g, "")
-    //       );
-    //       prepObj.handicap1_odds = Number(
-    //         tempSoursObj.kefsAllTemp[2].split("=&=")[1]
-    //       );
-    //       prepObj.handicap2_value = Number(
-    //         tempSoursObj.kefsAllTemp[3].split("=&=")[0].replace(/\(|\)/g, "")
-    //       );
-    //       prepObj.handicap2_odds = Number(
-    //         tempSoursObj.kefsAllTemp[3].split("=&=")[1]
-    //       );
-    //     }
-    //     if (tempSoursObj.kefsAllTemp[4].split("=&=")[0] !== "—") {
-    //       prepObj.total_value = Number(
-    //         tempSoursObj.kefsAllTemp[4].split("=&=")[0].replace(/\(|\)/g, "")
-    //       );
-    //       prepObj.total_under_odds = Number(
-    //         tempSoursObj.kefsAllTemp[4].split("=&=")[1]
-    //       );
-    //       prepObj.total_over_odds = Number(
-    //         tempSoursObj.kefsAllTemp[5].split("=&=")[1]
-    //       );
-    //     }
-    //     bd.push(prepObj);
-    //   });
+
+    console.log('777', retData);
+    return retData;
   });
 
   // await browser.close(); //========================================================== = = = =
@@ -257,9 +170,9 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  console.log("BD-", bd);
+  console.log("dataAllChamps-", dataAllChamps);
 
-  // sendOnBackend(bd);
+  sendOnBackend(dataAllChamps);
 
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
