@@ -29,27 +29,40 @@ const app = async () => {
   // Press 'PageDown' until we load the page completely
   console.log(111);
 
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 200; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
       delTimeout = idTimeOut;
     });
-    page.keyboard.press("PageDown");
+    // page.keyboard.press("PageDown");
     clearTimeout(delTimeout);
   }
 
   // Нажимаем чекбокс Все события
   const checkEvents = await page.$$eval("span", (els) => {
     const div_checkboxs = Array.from(els);
+    let one = false;
     div_checkboxs.forEach((div_checkbox) => {
+      if (one) return;
       console.log("===", div_checkbox.innerText);
       if (div_checkbox.innerText.trim().toLowerCase() === "Все события".toLowerCase()) {
         div_checkbox.click();
+        one = true
         return;
       }
     });
   });
+
+  for (let i = 0; i < 200; i += 1) {
+    let delTimeout;
+    await new Promise((resolve) => {
+      const idTimeOut = setTimeout(() => resolve(), 30);
+      delTimeout = idTimeOut;
+    });
+    // page.keyboard.press("PageDown");
+    clearTimeout(delTimeout);
+  }
 
   const showButton = await page.$$eval("button", (els) => {
     const buttonShow = Array.from(els);
@@ -126,6 +139,7 @@ const app = async () => {
             name1: team1,
             name2: team2,
             win1_odds: Number(betsChildrens[0]?.innerText || 1),
+            draw_odds: Number(betsChildrens[1]?.innerText || 1),
             win2_odds: Number(betsChildrens[2]?.innerText || 1),
             handicap1_value: Number(betsChildrens[3]?.innerText || 0),
             handicap1_odds: Number(betsChildrens[4]?.innerText || 1),
@@ -170,7 +184,13 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  console.log("dataAllChamps-", dataAllChamps);
+  // console.log("dataAllChamps-", dataAllChamps);
+  dataAllChamps.forEach((item) => {
+    console.log("name1", item.name1, "name2", item.name2, "date", item.date);
+    if (item.name2.trim().length === 0) {
+      console.log("Пропускаем");
+    }
+   })
 
   sendOnBackend(dataAllChamps);
 

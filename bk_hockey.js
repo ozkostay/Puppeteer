@@ -278,7 +278,7 @@ const app = async () => {
 
   const startToBackend = new Date();
 
-  // console.log("BD-", bd);
+  console.log("BD-", bd);
 
   sendOnBackend(bd);
 
