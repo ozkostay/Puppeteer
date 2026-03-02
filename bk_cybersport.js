@@ -96,6 +96,8 @@ const app = async () => {
       const title = championship.querySelector("a.line-champ__header-link");
       const championShipName = title.innerText.trim();
 
+      if (championShipName.includes('Женщины')) return;
+
       let championShipSport = championShipName.split(". ")[1].trim();
       let championShipTurnament = championShipName.split(". ")[2]?.split("(")[0].trim();
       let championShipDate = null;
@@ -138,16 +140,16 @@ const app = async () => {
             date: `${championShipDate} ${championShipLineTime}`,
             name1: team1,
             name2: team2,
-            win1_odds: Number(betsChildrens[0]?.innerText || 1),
-            draw_odds: Number(betsChildrens[1]?.innerText || 1),
-            win2_odds: Number(betsChildrens[2]?.innerText || 1),
-            handicap1_value: Number(betsChildrens[3]?.innerText || 0),
-            handicap1_odds: Number(betsChildrens[4]?.innerText || 1),
-            handicap2_value: Number(betsChildrens[5]?.innerText || 0),
-            handicap2_odds: Number(betsChildrens[6]?.innerText || 1),
-            total_value: Number(betsChildrens[7]?.innerText || 0),
-            total_under_odds: Number(betsChildrens[8]?.innerText || 1),
-            total_over_odds: Number(betsChildrens[9]?.innerText || 1),
+            win1_odds: Number(betsChildrens[0]?.innerText || null),
+            draw_odds: Number(betsChildrens[1]?.innerText || null),
+            win2_odds: Number(betsChildrens[2]?.innerText || null),
+            handicap1_value: Number(betsChildrens[3]?.innerText || null),
+            handicap1_odds: Number(betsChildrens[4]?.innerText || null),
+            handicap2_value: Number(betsChildrens[5]?.innerText || null),
+            handicap2_odds: Number(betsChildrens[6]?.innerText || null),
+            total_value: Number(betsChildrens[7]?.innerText || null),
+            total_under_odds: Number(betsChildrens[8]?.innerText || null),
+            total_over_odds: Number(betsChildrens[9]?.innerText || null),
           };
           console.log("999 ====== lineObj", lineObj);
           retData.push(lineObj);
@@ -159,7 +161,7 @@ const app = async () => {
     return retData;
   });
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
