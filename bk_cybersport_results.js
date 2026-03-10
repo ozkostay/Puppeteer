@@ -111,6 +111,7 @@ const app = async () => {
       const championShipName = spansTitle.innerText.trim();
 
       if (championShipName.includes("Женщины")) return;
+      if (championShipName.includes('матчи из 1-й карты')) return;
 
       let championShipSport = championShipName.split(". ")[1].trim();
       let championShipTurnament = championShipName.split(". ")[2]?.split("(")[0].trim();
@@ -135,7 +136,8 @@ const app = async () => {
         gameObj.result = result;
         
         const objOneResult = {};
-        objOneResult.sport =championShipSport
+        objOneResult.sport = championShipSport;
+        objOneResult.turnament = championShipTurnament;
         // console.log(`DATE-TIME ${dateB.innerText.trim()} ${gameObj.time}`)
         arrDateB = dateB.innerText.trim().split('.');
         const dateToObj = `${arrDateB[2]}.${arrDateB[1]}.${arrDateB[0]}`;
@@ -156,7 +158,7 @@ const app = async () => {
   // return retData;
   // };
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend ================================================================s
   const sendOnBackend = async (lines) => {
@@ -170,7 +172,7 @@ const app = async () => {
       body: JSON.stringify(lines),
     };
     try {
-      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/pars`;
+      const url = `${process.env.SPORT_URL}:${process.env.SPORT_PORT}/${sport}/results`;
       console.log("url", url);
       const res = await fetch(url, options);
       console.log("res", await res.json());
@@ -189,7 +191,7 @@ const app = async () => {
   //   }
   //  })
 
-  // sendOnBackend(dataAllChamps);
+  sendOnBackend(resultsCyber);
 
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);

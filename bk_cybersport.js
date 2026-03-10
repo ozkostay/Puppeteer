@@ -96,7 +96,15 @@ const app = async () => {
       const title = championship.querySelector("a.line-champ__header-link");
       const championShipName = title.innerText.trim();
 
+      // Исключаем
       if (championShipName.includes('Женщины')) return;
+      if (championShipName.includes('матчи из 1-й карты')) {
+        console.log('--- Исключаем------- ', championShipName);
+        return;
+      } else {
+        console.log('+++++++ НЕ Исключаем +++++++++ ', championShipName);
+      }
+      // =========================================================
 
       let championShipSport = championShipName.split(". ")[1].trim();
       let championShipTurnament = championShipName.split(". ")[2]?.split("(")[0].trim();
@@ -161,7 +169,7 @@ const app = async () => {
     return retData;
   });
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
