@@ -142,7 +142,8 @@ const app = async () => {
         arrDateB = dateB.innerText.trim().split('.');
         const dateToObj = `${arrDateB[2]}.${arrDateB[1]}.${arrDateB[0]}`;
         console.log('DATE-TIME ' + `${dateToObj} ${gameObj.time}`);
-        objOneResult.date = String(new Date(`${dateToObj} ${gameObj.time}`));
+        // objOneResult.date = String(new Date(`${dateToObj} ${gameObj.time}`));
+        objOneResult.date = `${dateToObj} ${gameObj.time}`;
         objOneResult.player1 = gameObj.teams[0];
         objOneResult.player2 = gameObj.teams[1];
         objOneResult.result = gameObj.result;
