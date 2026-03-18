@@ -169,7 +169,7 @@ const app = async () => {
     return retData;
   });
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend
   const sendOnBackend = async (lines) => {
