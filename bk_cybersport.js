@@ -54,7 +54,7 @@ const app = async () => {
     });
   });
 
-  for (let i = 0; i < 200; i += 1) {
+  for (let i = 0; i < 20; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
       const idTimeOut = setTimeout(() => resolve(), 30);
@@ -115,6 +115,7 @@ const app = async () => {
       
       childrens.forEach((children) => {
         if (children.tagName === "DIV" && children.classList.contains("line-champ__date")) {
+
           championShipDate = children.innerText;
           championShipLineTime = null;
         }
@@ -202,6 +203,7 @@ const app = async () => {
     }
    })
 
+  //  console.log('555', dataAllChamps)
   sendOnBackend(dataAllChamps);
 
   console.log("Время выполнения ", new Date() - startToBackend);
