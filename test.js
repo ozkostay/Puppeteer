@@ -1,5 +1,4 @@
-const aaa = ['111', '222','333']
-aaa.forEach((item) => {
-    if (item.includes('222')) return
-    console.log(item);
-})
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const formattedDate = yesterday.toISOString().split('T')[0];
+console.log(formattedDate); // "2026-03-20"

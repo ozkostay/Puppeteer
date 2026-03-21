@@ -19,12 +19,12 @@ const app = async () => {
     headless: headless, // TRUE - не показывать браузер
   });
 
-  const url = "https://betcity.ru/ru/results/cybersport";
-  //           https://betcity.ru/ru/results/cybersport?date=2026-03-21
-  // const yesterday = new Date();
-  // yesterday.setDate(yesterday.getDate() - 1);
-  // const formattedDate = yesterday.toISOString().split('T')[0];
-  // console.log(formattedDate); // "2026-03-20"
+  let yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const formattedDate = yesterday.toISOString().split('T')[0];
+  console.log(formattedDate); // "2026-03-20"
+  const url = `https://betcity.ru/ru/results/cybersport?date=${formattedDate}`
+  
 
   const page = await browser.newPage();
   await page.goto(url, {
@@ -50,8 +50,8 @@ const app = async () => {
   //   let one = false;
   //   div_checkboxs.forEach((div_checkbox) => {
   //     if (one) return;
-  //     console.log("===", div_checkbox.innerText);
-  //     if (div_checkbox.innerText.trim().toLowerCase() === "Все события".toLowerCase()) {
+  //     console.log("===", div_checkbox?.innerText);
+  //     if (div_checkbox?.innerText.trim().toLowerCase() === "Все события".toLowerCase()) {
   //       div_checkbox.click();
   //       one = true
   //       return;
@@ -73,8 +73,8 @@ const app = async () => {
   //   const buttonShow = Array.from(els);
   //   console.log("button", buttonShow);
   //   buttonShow.forEach((button) => {
-  //     console.log("===", button.innerText);
-  //     if (button.innerText.trim().toLowerCase() === "Показать".toLowerCase()) {
+  //     console.log("===", button?.innerText);
+  //     if (button?.innerText.trim().toLowerCase() === "Показать".toLowerCase()) {
   //       button.click();
   //       return;
   //     }
@@ -104,16 +104,16 @@ const app = async () => {
 
     const dateB = resultsSection.querySelector("b.datepicker__current-date");
     
-    // console.log('==== DATE ===', new Date(dateB.innerText));
+    // console.log('==== DATE ===', new Date(dateB?.innerText));
 
     const championships = resultsSection.querySelectorAll("div.results-champ:not([hidden])");
-    // console.log("championships", championships);
+    console.log("championships", championships);
 
     championships.forEach((championship) => {
       console.log(" ");
       console.log("el ========================================= ", championship);
       const spansTitle = championship.querySelector("span.results-champ__title-text");
-      const championShipName = spansTitle.innerText.trim();
+      const championShipName = spansTitle?.innerText.trim();
 
       if (championShipName.includes("Женщины")) return;
       if (championShipName.includes('матчи из 1-й карты')) return;
@@ -129,25 +129,32 @@ const app = async () => {
       // spans.time = 
       gameDivs.forEach((div) => {
       //   console.log("==========", div);
+        console.log('=== 1');
         const spansDivs = Array.from(div.querySelectorAll("span"));
         if (spansDivs.length < 6) return; // Если 'Кто выше и т.д.'
+        console.log('spansDivs', spansDivs);
 
 
-        let result = spansDivs[4].innerText.replace('\n', '').trim();
+
+
+
+
+        let result = spansDivs[4]?.innerText.replace('\n', '').trim();
         if (result.length < 1) return
         result = result.toLowerCase().includes('отмена') ? 'отмена' : result;
-
+        console.log('=== 2');
         const gameObj = {};
-        gameObj.time = spansDivs[0].innerText.replace('\n', '').trim();
-        gameObj.teams = spansDivs[2].innerText.replace('\n', '').trim().split(' — ');
+        gameObj.time = spansDivs[0]?.innerText.replace('\n', '').trim();
+        gameObj.teams = spansDivs[2]?.innerText.replace('\n', '').trim().split(' — ');
         // console.log();
         gameObj.result = result;
         
         const objOneResult = {};
         objOneResult.sport = championShipSport;
         objOneResult.turnament = championShipTurnament;
-        // console.log(`DATE-TIME ${dateB.innerText.trim()} ${gameObj.time}`)
-        arrDateB = dateB.innerText.trim().split('.');
+        // console.log(`DATE-TIME ${dateB?.innerText.trim()} ${gameObj.time}`)
+        console.log('=== 3');
+        arrDateB = dateB?.innerText.trim().split('.');
         const dateToObj = `${arrDateB[2]}.${arrDateB[1]}.${arrDateB[0]}`;
         console.log('DATE-TIME ' + `${dateToObj} ${gameObj.time}`);
         // objOneResult.date = String(new Date(`${dateToObj} ${gameObj.time}`));
@@ -167,7 +174,7 @@ const app = async () => {
   // return retData;
   // };
 
-  await browser.close(); //========================================================== = = = =
+  // await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend ================================================================s
   const sendOnBackend = async (lines) => {
@@ -200,7 +207,7 @@ const app = async () => {
   //   }
   //  })
 
-  sendOnBackend(resultsCyber);
+  // sendOnBackend(resultsCyber);
 
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
