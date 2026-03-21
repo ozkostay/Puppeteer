@@ -174,7 +174,7 @@ const app = async () => {
   // return retData;
   // };
 
-  // await browser.close(); //========================================================== = = = =
+  await browser.close(); //========================================================== = = = =
 
   // Отправляем на backend ================================================================s
   const sendOnBackend = async (lines) => {
@@ -207,7 +207,7 @@ const app = async () => {
   //   }
   //  })
 
-  // sendOnBackend(resultsCyber);
+  sendOnBackend(resultsCyber);
 
   console.log("Время выполнения ", new Date() - startToBackend);
   console.log(999);
