@@ -48,12 +48,13 @@ const app = async () => {
       console.log("===", div_checkbox.innerText);
       if (div_checkbox.innerText.trim().toLowerCase() === "Все события".toLowerCase()) {
         div_checkbox.click();
-        one = true
+        one = true;
         return;
       }
     });
   });
 
+  console.log(111 - 2);
   for (let i = 0; i < 20; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
@@ -68,15 +69,23 @@ const app = async () => {
     const buttonShow = Array.from(els);
     console.log("button", buttonShow);
     buttonShow.forEach((button) => {
-      console.log("===", button.innerText);
-      if (button.innerText.trim().toLowerCase() === "Показать".toLowerCase()) {
+      console.log("=== button.innerText 72", button.innerText, "className", button.className);
+      // if (button.innerText.trim().toLowerCase() === "Показать".toLowerCase()) {
+      //   // button.click();
+      //   console.log('===== Показать!!! ===');
+      //   return;
+      // }
+      // line__controls - button;
+      if (button.className == "line__controls-button") {
         button.click();
+        console.log('===== Показать!!! ===');
         return;
       }
     });
   });
 
-  console.log(222, "Опять ждем");
+  console.log(111 - 3);
+  // console.log(222, "Опять ждем");
   for (let i = 0; i < 200; i += 1) {
     let delTimeout;
     await new Promise((resolve) => {
@@ -97,12 +106,12 @@ const app = async () => {
       const championShipName = title.innerText.trim();
 
       // Исключаем
-      if (championShipName.includes('Женщины')) return;
-      if (championShipName.includes('матчи из 1-й карты')) {
-        console.log('--- Исключаем------- ', championShipName);
+      if (championShipName.includes("Женщины")) return;
+      if (championShipName.includes("матчи из 1-й карты")) {
+        console.log("--- Исключаем------- ", championShipName);
         return;
       } else {
-        console.log('+++++++ НЕ Исключаем +++++++++ ', championShipName);
+        console.log("+++++++ НЕ Исключаем +++++++++ ", championShipName);
       }
       // =========================================================
 
@@ -112,10 +121,9 @@ const app = async () => {
       let championShipLineTime = null;
 
       const childrens = Array.from(championship.children);
-      
+
       childrens.forEach((children) => {
         if (children.tagName === "DIV" && children.classList.contains("line-champ__date")) {
-
           championShipDate = children.innerText;
           championShipLineTime = null;
         }
@@ -136,11 +144,11 @@ const app = async () => {
 
           team1 = championShipTeams.children[0]?.innerText;
           team2 = championShipTeams.children[1]?.innerText;
-          
+
           // Далее выбераем коэффициенты для каждой линии
           const kefsContainer = children.querySelector("div.line-event__main-bets");
           const betsChildrens = Array.from(kefsContainer.children);
-          
+
           const lineObj = {
             timestamp: Date(),
             sport: championShipSport,
@@ -166,7 +174,7 @@ const app = async () => {
       });
     });
 
-    console.log('777', retData);
+    console.log("777", retData);
     return retData;
   });
 
@@ -201,9 +209,10 @@ const app = async () => {
     if (item.name2.trim().length === 0) {
       console.log("Пропускаем");
     }
-   })
+  });
 
-  //  console.log('555', dataAllChamps)
+  // console.log("555-1", dataAllChamps[0]);
+  // console.log("555-2", dataAllChamps[dataAllChamps.length - 1]);
   sendOnBackend(dataAllChamps);
 
   console.log("Время выполнения ", new Date() - startToBackend);
