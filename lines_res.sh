@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#exit
+
 log_file='lines-res.log'
 dirPupet='/var/Puppeteer'
 
@@ -32,6 +34,14 @@ $node_bin bk_basketball_results.js
 
 echo    Страт РЕЗУЛЬТАТЫ ХОККЕЙ    ===  `date` = >> $log_file
 $node_bin bk_hockey_results.js
+
+
+echo    Страт РЕЗУЛЬТАТЫ КИБЕРСПОРТ за вчера    ===  `date` = >> $log_file
+$node_bin bk_cybersport_results_yesterday.js
+
+echo    Страт РЕЗУЛЬТАТЫ КИБЕРСПОРТ за сегодня   ===  `date` = >> $log_file
+$node_bin bk_cybersport_results.js
+
 
 echo Конец ===  `date` = >> $log_file
 
