@@ -211,8 +211,8 @@ const app = async () => {
     }
   });
 
-  // console.log("555-1", dataAllChamps[0]);
-  // console.log("555-2", dataAllChamps[dataAllChamps.length - 1]);
+  console.log("555-1", dataAllChamps[0]);
+  console.log("555-2", dataAllChamps[dataAllChamps.length - 1]);
   sendOnBackend(dataAllChamps);
 
   console.log("Время выполнения ", new Date() - startToBackend);
